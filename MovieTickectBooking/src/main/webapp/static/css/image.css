@@ -1,0 +1,62 @@
+@charset "UTF-8";
+
+  body {
+	background-attachment: fixed;
+	background-size:cover;
+	background-image:
+		url("https://media.istockphoto.com/photos/theatre-curtains-background-picture-id173588123?b=1&k=20&m=173588123&s=170667a&w=0&h=v5hk2I3ACNaWSn0VZeD39iwQ6uLSrf-qb0Dfezr4bNM=");	
+}
+.card-body{
+ color: white; 
+ text-align: center;
+}  
+
+
+.boundery{
+        border: 2px solid rgb(243, 142, 59);
+        background-color: white;
+        padding: 10px; 
+        font-family: system-ui;
+        }
+        
+        img {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+        }
+        
+        .body{
+        margin-top:15px;
+        color: white;
+        text-align: center;
+        }
+        .city{
+         margin-left: 21%;
+        }
+        
+        .title{
+        font-family: initial;
+    	font-weight: bolder;
+        }
+        
+        #table-div{
+            background-color: antiquewhite;
+            font-family: system-ui;
+            margin-left: 18%;
+            display: none;
+        }
+        
+        .table-section{
+         background-color: antiquewhite;
+        }
+        
+        #user-table{
+            font-size: x-large;
+		    font-family: auto;
+		    font-weight: 600;
+        }
+
+.block{
+ margin-left: 18%;	
+ margin-top:8%;
+}
