@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 import com.v2stech.movieticketbooking.model.CinemaSeat;
 import com.v2stech.movieticketbooking.model.City;
 import com.v2stech.movieticketbooking.model.Customer;
@@ -19,7 +20,6 @@ import com.v2stech.movieticketbooking.model.Movie;
 import com.v2stech.movieticketbooking.model.MovieShow;
 import com.v2stech.movieticketbooking.model.PaymentMethod;
 import com.v2stech.movieticketbooking.model.UserCredentials;
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 /**
@@ -128,14 +128,25 @@ public class HomeController {
 	
 	
 	@PostMapping("/BookingDetail")
-	public void setBookingDetail(@RequestBody adminBookedTicket bookedTicket) {
+	public void setBookingDetail(@RequestBody AdminBookedTicket bookedTicket) {
 		bookingService.setBookingDetails(bookedTicket);
 	}
 	
+	@RequestMapping("/BookingHistory")
+	public ModelAndView getBookingHistoryPage(Model model) {
+		model.addAttribute("username",userName);
+		return new ModelAndView("BookingHistory");
+	}
 
+	@RequestMapping("/BookingHistoryList")
+	public List<AdminBookedTicket> getBookingHistoryList() {
+		return bookingService.getBookingHistoryLists(userName);
+	}
 	
-	
-	
-	
+	@RequestMapping("/paymentDetail/{bookingId}")
+	public List<AdminBookedTicket> getPaymentDetail(@PathVariable int bookingId) {
+		return bookingService.getPaymentDetails(bookingId);
+	}
+
 	
 }

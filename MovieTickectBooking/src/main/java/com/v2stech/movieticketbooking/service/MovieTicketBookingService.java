@@ -14,7 +14,7 @@ import com.v2stech.movieticketbooking.model.SeatStatus;
 import com.v2stech.movieticketbooking.model.ShowSeat;
 import com.v2stech.movieticketbooking.model.State;
 import com.v2stech.movieticketbooking.model.UserCredentials;
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 
 public interface MovieTicketBookingService {
 
@@ -40,7 +40,7 @@ public interface MovieTicketBookingService {
 
 	Movie getMovieSingleDetail(String movieName);
 
-	List<adminBookedTicket> getBookedList();
+	List<AdminBookedTicket> getBookedList();
 
 	void deleteBooking(int id);
 
@@ -92,7 +92,11 @@ public interface MovieTicketBookingService {
 	
 	List<PaymentMethod> getPaymentMethods();
 	
-	void setBookingDetails(adminBookedTicket bookedTicket);
+	void setBookingDetails(AdminBookedTicket bookedTicket);
+	
+	List<AdminBookedTicket> getBookingHistoryLists(String userName);
+	
+	 List<AdminBookedTicket> getPaymentDetails(int bookingId);
 	
 	
 	//int getTotalSeatPrice(int totalSeat);

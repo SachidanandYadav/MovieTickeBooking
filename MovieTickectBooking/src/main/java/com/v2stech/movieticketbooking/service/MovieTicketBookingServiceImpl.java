@@ -20,7 +20,7 @@ import com.v2stech.movieticketbooking.model.SeatStatus;
 import com.v2stech.movieticketbooking.model.ShowSeat;
 import com.v2stech.movieticketbooking.model.State;
 import com.v2stech.movieticketbooking.model.UserCredentials;
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 
 @Service
 public class MovieTicketBookingServiceImpl implements MovieTicketBookingService {
@@ -123,7 +123,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<adminBookedTicket> getBookedList() {
+	public List<AdminBookedTicket> getBookedList() {
 		return movieTickectBookingDAO.getBookedLists();
 	}
 
@@ -271,7 +271,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public void setBookingDetails(adminBookedTicket bookedTicket) {
+	public void setBookingDetails(AdminBookedTicket bookedTicket) {
 		int totalSeat=0;
 		for(CinemaSeat seat : singleSeats) {
 		totalSeat = seat.getSeat()-bookedTicket.getSeat();
@@ -280,8 +280,16 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 		for(MovieShow show : singleShow) {
 			movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShow_id(),totalSeat);
 		}
-		
-		
+	}
+
+	@Override
+	public List<AdminBookedTicket> getBookingHistoryLists(String userName) {
+		return movieTickectBookingDAO.getBookingHistoryList(userName);
+	}
+
+	@Override
+	public List<AdminBookedTicket> getPaymentDetails(int bookingId) {
+		return movieTickectBookingDAO.getPaymentDetail(bookingId);
 	}
 
 	

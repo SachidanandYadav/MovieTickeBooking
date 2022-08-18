@@ -1,5 +1,5 @@
     $(document).ready(function () {
-        
+        getBookingHistory();
     });
 
 $("#addCustomer").on("click", function() {
@@ -233,6 +233,51 @@ function  totalSeat(){
 		}
 	});
 }	
+
+
+function getBookingHistory() {
+		$.ajax({
+			url: "http://localhost:8080/MovieTickectBooking/BookingHistoryList",
+			type: "GET",
+			success: function(response) {
+				for (res in response) {
+					$("#booking-table").append("<tr><td>" + response[res].booking_id + "</td><td>" + response[res].seat + "</td><td>" + response[res].booking_time + "</td><td>" + response[res].startTime + "</td><td><button type='button' class='btn btn-info mr-2' onclick='paymentDetail(" + response[res].booking_id + ")' data-toggle='modal'  data-target='#exampleModal' style='margin-right: 5px;'><i class='fa fa-edit'></i></button></td></tr>")
+				}
+			},
+			failure: function(response) {
+				$('#failure').show();
+				$("#failure").delay(8000).fadeOut("slow");
+			},
+			error: function(response) {
+				$('#error').show();
+				$("#error").delay(8000).fadeOut("slow");
+			}
+		});
+	}
+	
+	
+	function paymentDetail(id){
+		$.ajax({
+		url: "http://localhost:8080/MovieTickectBooking/paymentDetail/" + id,
+		type: "GET",
+		success: function(res) {
+			$('#paymentAmout').val(res[0].amount);
+			$('#paymentMethod').val(res[0].methodType);
+			$('#paymentStatus').val(res[0].paymentStatus_Type);
+			$('#paymentTime').val(res[0].payment_time);
+			
+		},
+		failure: function(res) {
+			$('#failure').show();
+			$("#failure").delay(8000).fadeOut("slow");
+		},
+		error: function(res) {
+			$('#error').show();
+			$("#error").delay(8000).fadeOut("slow");
+		}
+	});
+		
+	}
 
 
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 @RestController
@@ -26,7 +26,7 @@ public class BookedTicketController {
 	}
 	
 	@RequestMapping("/bookingList")
-	public List<adminBookedTicket> getBookedLists() {
+	public List<AdminBookedTicket> getBookedLists() {
 		return bookingService.getBookedList();
 	}
 	

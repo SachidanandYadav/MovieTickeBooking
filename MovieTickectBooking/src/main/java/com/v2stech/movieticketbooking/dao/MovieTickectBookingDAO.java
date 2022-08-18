@@ -2,8 +2,7 @@ package com.v2stech.movieticketbooking.dao;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestBody;
-
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 import com.v2stech.movieticketbooking.model.CinemaHall;
 import com.v2stech.movieticketbooking.model.CinemaSeat;
 import com.v2stech.movieticketbooking.model.City;
@@ -15,7 +14,6 @@ import com.v2stech.movieticketbooking.model.PaymentMethod;
 import com.v2stech.movieticketbooking.model.SeatStatus;
 import com.v2stech.movieticketbooking.model.ShowSeat;
 import com.v2stech.movieticketbooking.model.State;
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
 
 public interface MovieTickectBookingDAO {
 
@@ -31,7 +29,7 @@ public interface MovieTickectBookingDAO {
 
 	void deleteBookings(int id);
 
-	List<adminBookedTicket> getBookedLists();
+	List<AdminBookedTicket> getBookedLists();
 
 	List<CinemaHall> getCinemaHallLists(int id);
 
@@ -95,7 +93,11 @@ public interface MovieTickectBookingDAO {
 	
 	List<PaymentMethod> getPaymentMethod();
 	
-	void setBookingDetail(adminBookedTicket bookedTicket,int showId,int totalSeat);
+	void setBookingDetail(AdminBookedTicket bookedTicket,int showId,int totalSeat);
+	
+	List<AdminBookedTicket> getBookingHistoryList(String userName);
+	
+	List<AdminBookedTicket> getPaymentDetail( int bookingId);
 	
 	
 	

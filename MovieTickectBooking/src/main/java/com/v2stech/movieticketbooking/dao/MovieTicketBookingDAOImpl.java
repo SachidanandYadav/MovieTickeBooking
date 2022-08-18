@@ -18,7 +18,7 @@ import com.v2stech.movieticketbooking.model.PaymentMethod;
 import com.v2stech.movieticketbooking.model.SeatStatus;
 import com.v2stech.movieticketbooking.model.ShowSeat;
 import com.v2stech.movieticketbooking.model.State;
-import com.v2stech.movieticketbooking.model.adminBookedTicket;
+import com.v2stech.movieticketbooking.model.AdminBookedTicket;
 
 @Repository
 public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
@@ -220,11 +220,11 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	}
 
 	@Override
-	public List<adminBookedTicket> getBookedLists() {
+	public List<AdminBookedTicket> getBookedLists() {
 		return jdbcTemplate.query("SELECT booking_id,seat,booking_time,user_name,show_date"
 				+ " FROM booking INNER JOIN user_credentials USING (user_id) INNER JOIN movie_show USING (show_id) "
 				+ " order by booking_id;",
-				new BeanPropertyRowMapper<adminBookedTicket>(adminBookedTicket.class));
+				new BeanPropertyRowMapper<AdminBookedTicket>(AdminBookedTicket.class));
 	}
 
 	@Override
@@ -283,7 +283,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	}
 
 	@Override
-	public void setBookingDetail(adminBookedTicket bookedTicket,int showId,int totalSeat) {
+	public void setBookingDetail(AdminBookedTicket bookedTicket,int showId,int totalSeat) {
 		jdbcTemplate.update(
 				"INSERT INTO booking (seat, user_id, show_id)VALUES(?,(select user_id from user_credentials where user_name=?),?)",bookedTicket.getSeat(),bookedTicket.getUser_name(),showId);
 
@@ -292,6 +292,16 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 		
 		jdbcTemplate.update("UPDATE cinema_seat SET seat=? where hall_id=? and seatType_id=?",totalSeat,hallId,seatTypeID);
 		
+	}
+
+	@Override
+	public List<AdminBookedTicket> getBookingHistoryList(String userName) {
+		return jdbcTemplate.query("select booking_id,seat,booking_time,startTime from booking inner join movie_show using(show_id) where user_id= (select user_id from user_credentials where user_name=?) ", new BeanPropertyRowMapper<AdminBookedTicket>(AdminBookedTicket.class),userName);
+	}
+
+	@Override
+	public List<AdminBookedTicket> getPaymentDetail(int bookingId) {
+		return jdbcTemplate.query("select amount,payment_time,methodType,paymentStatus_Type from payment inner join paymentMethod using(methodId) inner join payment_status using(paymentStatus_id ) where booking_id=?", new BeanPropertyRowMapper<AdminBookedTicket>(AdminBookedTicket.class),bookingId);
 	}
 
 
