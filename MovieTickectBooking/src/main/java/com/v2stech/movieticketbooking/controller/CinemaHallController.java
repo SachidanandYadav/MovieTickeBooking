@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.v2stech.movieticketbooking.model.CinemaHall;
-import com.v2stech.movieticketbooking.model.City;
+import com.v2stech.movieticketbooking.model.CinemaHallDTO;
+import com.v2stech.movieticketbooking.model.CityDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 @RestController
@@ -22,36 +22,36 @@ public class CinemaHallController {
 	@Autowired
 	MovieTicketBookingService bookingService;
 	
-	@RequestMapping("/cinemaHall")
+	@RequestMapping("/cinema-hall")
 	public ModelAndView getcinemaHallDeatil(Model model) {
 		model.addAttribute("stateList",bookingService.getStateDatas());
 		return new ModelAndView("adminCinemaHall");
 	}
 	
 	
-	@RequestMapping("/cinemaHallList")
-	public List<CinemaHall> getCinemaHallList() {
+	@RequestMapping("/cinema-hall-list")
+	public List<CinemaHallDTO> getCinemaHallList() {
 		return bookingService.getCinemaHallLists();
 	}
 	
 	
-	@RequestMapping("/cinemaHall/{id}")
-	public List<CinemaHall> getSingleCinemaHall(@PathVariable("id") int id,Model model) {
+	@RequestMapping("/cinema-hall/{id}")
+	public CinemaHallDTO getSingleCinemaHall(@PathVariable("id") int id,Model model) {
 		model.addAttribute("value",bookingService.getSingleCinemaHalls(id));
 		return  bookingService.getSingleCinemaHalls(id);
 	}
 	
-	@RequestMapping("/cinemaStateList/{cityId}")
-	public List<City> getCityList(@PathVariable("cityId") int id) {
+	@RequestMapping("/cinema-state-list/{cityId}")
+	public List<CityDTO> getCityList(@PathVariable("cityId") int id) {
 		return  bookingService.getCityLists(id);
 	}
 	
-	@PostMapping("/CinemaHall")
-	public void cinemaHall(@RequestBody CinemaHall cinemaHall) {
+	@PostMapping("/cinema-halls")
+	public void cinemaHall(@RequestBody CinemaHallDTO cinemaHall) {
 		bookingService.cinemaHalls(cinemaHall);
 	}
 
-	@DeleteMapping("/DeleteCinemaHall/{id}")
+	@DeleteMapping("/delete-cinema-hall/{id}")
 	public void deleteCinemaHall(@PathVariable int id) {
 		bookingService.deleteCinemaHalls(id);
 	}

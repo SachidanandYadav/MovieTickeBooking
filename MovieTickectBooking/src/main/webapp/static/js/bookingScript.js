@@ -6,18 +6,18 @@ $(document).ready(function(){
 
 	function getBookingData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/bookingList",
+			url: "http://localhost:8080/MovieTickectBooking/booking-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
-					$("#user-table").append("<tr><td>" + response[res].booking_id + "</td><td>" + response[res].seat + "</td><td>" + response[res].booking_time + "</td><td>" + response[res].user_name + "</td><td>" + response[res].show_date + "</td><td><button type='button' data-toggle='modal'  data-target='#confirm-delete' class='btn btn-danger' id='deleteData' onclick='deleteData(" + response[res].booking_id + ")' ><i class='far fa-trash-alt'></i></button></td></tr>")
+					$("#user-table").append("<tr><td>" + response[res].bookingId + "</td><td>" + response[res].seat + "</td><td>" + response[res].bookingTime + "</td><td>" + response[res].userName + "</td><td>" + response[res].showDate + "</td><td><button type='button' data-toggle='modal'  data-target='#confirm-delete' class='btn btn-danger' id='deleteData' onclick='deleteData(" + response[res].bookingId + ")' ><i class='far fa-trash-alt'></i></button></td></tr>")
 				}
 			},
-			failure: function(response) {
+			failure: function() {
 				$('#failure').show();
 				$("#failure").delay(8000).fadeOut("slow");
 			},
-			error: function(response) {
+			error: function() {
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
 			}
@@ -28,19 +28,19 @@ $(document).ready(function(){
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/DeleteBooking/" + id,
+			url: "http://localhost:8080/MovieTickectBooking/delete-booking/" + id,
 			type: "DELETE",
-			success: function(response, status) {
+			success: function() {
 				$("#user-table").html("");
 				location.reload(true);
 				$('#deleteSuccess').show();
 				$("#deleteSuccess").delay(8000).fadeOut("slow");
 			},
-			failure: function(response) {
+			failure: function() {
 				$('#failure').show();
 				$("#failure").delay(8000).fadeOut("slow");
 			},
-			error: function(response) {
+			error: function() {
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
 			}

@@ -95,7 +95,7 @@ border: 2px solid lightgray;
 							</button>
 						</div>
 						<div class="modal-body">
-						<input type="text" class="form-control" id="cinemaSeatId">
+						<input type="hidden" class="form-control" id="cinemaSeatId">
 					<div class="form-group row">
 						<label for="city" class="col-sm-3 col-form-label">City</label>
 						<div class="col-sm-8">

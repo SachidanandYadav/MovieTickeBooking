@@ -36,7 +36,7 @@
 							Start Time : ${movieShow.startTime} / End Time : ${movieShow.endTime}
 							</td>
 							<td>
-							<a href="/MovieTickectBooking/ShowBookingPage"><button type="button" class="btn btn-danger">Booking</button></a>
+							<a href="/MovieTickectBooking/show-booking-page"><button type="button" class="btn btn-danger">Booking</button></a>
 							</td>
 							</tr>
 						</c:forEach>

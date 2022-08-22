@@ -145,7 +145,7 @@ border: 2px solid lightgray;
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal" onclick="reload()">Close</button>
-							<button type="button"  class="btn btn-primary" id="MovieShow">Movie Show</button>
+							<button type="button"  class="btn btn-primary" data-dismiss="modal" id="MovieShow" >Movie Show</button>
 						</div>
 					</div>
 				</div>

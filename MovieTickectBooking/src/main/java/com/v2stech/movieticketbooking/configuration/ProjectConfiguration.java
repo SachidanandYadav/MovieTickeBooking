@@ -22,7 +22,7 @@ public class ProjectConfiguration implements WebMvcConfigurer {
 	
 	@Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("redirect:/LoginPage");
+        registry.addViewController("/").setViewName("redirect:/login-page");
     }
 	
 	@Bean

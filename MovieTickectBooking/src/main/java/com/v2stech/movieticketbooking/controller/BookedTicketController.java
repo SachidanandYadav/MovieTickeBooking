@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.v2stech.movieticketbooking.model.AdminBookedTicket;
+import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 @RestController
@@ -20,17 +20,17 @@ public class BookedTicketController {
 	@Autowired
 	MovieTicketBookingService bookingService;
 	
-	@GetMapping("/bookingPage")
+	@GetMapping("/booking-page")
 	public ModelAndView getBookingPage() {
 		return new ModelAndView("adminBookedTicket");
 	}
 	
-	@RequestMapping("/bookingList")
-	public List<AdminBookedTicket> getBookedLists() {
+	@RequestMapping("/booking-list")
+	public List<BookedTicketDTO> getBookedLists() {
 		return bookingService.getBookedList();
 	}
 	
-	@DeleteMapping("/DeleteBooking/{id}")
+	@DeleteMapping("/delete-booking/{id}")
 	public void deleteBooking(@PathVariable int id) {
 		bookingService.deleteBooking(id);
 	}

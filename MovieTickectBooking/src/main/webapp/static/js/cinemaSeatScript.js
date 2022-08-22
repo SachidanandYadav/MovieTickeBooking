@@ -6,18 +6,18 @@ $(document).ready(function(){
 
 	function getCinemaSeatData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinemaSeatList",
+			url: "http://localhost:8080/MovieTickectBooking/cinema-seat-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
-					$("#user-table").append("<tr><td>" + response[res].cinemaSeat_id + "</td><td>" + response[res].seat + "</td><td>" + response[res].hall_name + "</td><td>" + response[res].seatName + "</td><td><button type='button' class='btn btn-info mr-2' onclick='editData(" + response[res].cinemaSeat_id + ")' data-toggle='modal'  data-target='#exampleModal' style='margin-right: 5px;'><i class='fa fa-edit'></i></button><button type='button' data-toggle='modal'  data-target='#confirm-delete' class='btn btn-danger' id='deleteData' onclick='deleteData(" + response[res].cinemaSeat_id + ")' ><i class='far fa-trash-alt'></i></button></td></tr>")
+					$("#user-table").append("<tr><td>" + response[res].cinemaSeatId + "</td><td>" + response[res].seat + "</td><td>" + response[res].hallName + "</td><td>" + response[res].seatName + "</td><td><button type='button' class='btn btn-info mr-2' onclick='editData(" + response[res].cinemaSeatId + ")' data-toggle='modal'  data-target='#exampleModal' style='margin-right: 5px;'><i class='fa fa-edit'></i></button><button type='button' data-toggle='modal'  data-target='#confirm-delete' class='btn btn-danger' id='deleteData' onclick='deleteData(" + response[res].cinemaSeatId + ")' ><i class='far fa-trash-alt'></i></button></td></tr>")
 				}
 			},
-			failure: function(response) {
+			failure: function() {
 				$('#failure').show();
 				$("#failure").delay(8000).fadeOut("slow");
 			},
-			error: function(response) {
+			error: function() {
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
 			}
@@ -28,19 +28,19 @@ $(document).ready(function(){
 	
 	function editData(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinemaSeat/" + id,
+		url: "http://localhost:8080/MovieTickectBooking/cinema-seat/" + id,
 		type: "GET",
 		success: function(res) {
-			$('#cinemaSeatId').val(res[0].cinemaSeat_id);
-			$("#hallName").append("<option value=" + res[0].hall_name + ">" + res[0].hall_name + "</option>")
-			$("#seatType").append("<option disabled value=" + res[0].seatType_id + ">" + res[0].seatName + "</option>")
+			$('#cinemaSeatId').val(res.cinemaSeatId);
+			$("#hallName").append("<option value=" + res.hallName + ">" + res.hallName + "</option>")
+			$("#seatType").append("<option disabled value=" + res.seatTypeId + ">" + res.seatName + "</option>")
 			$('#totalSeat').val(res[0].seat);
 		},
-		failure: function(res) {
+		failure: function() {
 			$('#failure').show();
 			$("#failure").delay(8000).fadeOut("slow");
 		},
-		error: function(res) {
+		error: function() {
 			$('#error').show();
 			$("#error").delay(8000).fadeOut("slow");
 		}
@@ -52,19 +52,19 @@ $(document).ready(function(){
 	function selectOption(){
 		var id = $('#cityid').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinemaHallList/" + id,
+			url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list/" + id,
 			type: "GET",
-			success: function(response, status) {
+			success: function(response) {
 				$("#hallName").html("");
 				for (res in response) {
-					$("#hallName").append("<option value=" + response[res].hall_name + ">" + response[res].hall_name + "</option>")
+					$("#hallName").append("<option value=" + response[res].hallName + ">" + response[res].hallName + "</option>")
 				}
 			},
-			failure: function(response) {
+			failure: function() {
 				$('#failure').show();
 				$("#failure").delay(8000).fadeOut("slow");
 			},
-			error: function(response) {
+			error: function() {
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
 			}
@@ -86,26 +86,26 @@ function resetAllFiled() {
 	
 	$("#MovieSeat").on("click", function() {
 	var seat = {}
-	seat.cinemaSeat_id = $('#cinemaSeatId').val();
+	seat.cinemaSeatId = $('#cinemaSeatId').val();
 	seat.seat = $('#totalSeat').val();
-	seat.hall_name = $('#hallName').val();
-	seat.seatType_id = $('#seatType').val();
+	seat.hallName = $('#hallName').val();
+	seat.seatTypeId = $('#seatType').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/CinemaSeat",
+		url: "http://localhost:8080/MovieTickectBooking/cinema-seat",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(seat),
-		success: function(response) {
+		success: function() {
 			$("#user-table").html("");
 			getCinemaSeatData();
 			$('#addSuccess').show();
 			$("#addSuccess").delay(8000).fadeOut("slow");
 		},
-		failure: function(response) {
+		failure: function() {
 			$('#failure').show();
 			$("#failure").delay(8000).fadeOut("slow");
 		},
-		error: function(response) {
+		error: function() {
 			$('#error').show();
 			$("#error").delay(8000).fadeOut("slow");
 		}
@@ -116,19 +116,19 @@ function resetAllFiled() {
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/DeleteCinemaSeat/" + id,
+			url: "http://localhost:8080/MovieTickectBooking/delete-cinema-seat/" + id,
 			type: "DELETE",
-			success: function(response, status) {
+			success: function() {
 				$("#user-table").html("");
 				location.reload(true);
 				$('#deleteSuccess').show();
 				$("#deleteSuccess").delay(8000).fadeOut("slow");
 			},
-			failure: function(response) {
+			failure: function() {
 				$('#failure').show();
 				$("#failure").delay(8000).fadeOut("slow");
 			},
-			error: function(response) {
+			error: function() {
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
 			}

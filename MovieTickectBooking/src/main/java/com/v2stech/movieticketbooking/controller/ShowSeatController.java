@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.v2stech.movieticketbooking.model.ShowSeat;
+import com.v2stech.movieticketbooking.model.ShowSeatDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 @RestController
@@ -22,21 +22,21 @@ public class ShowSeatController {
 	@Autowired
 	MovieTicketBookingService bookingService;
 		
-	@RequestMapping("/showSeat")
+	@RequestMapping("/show-seat")
 	public ModelAndView getshowSeatDeatil(Model model) {
 		model.addAttribute("cityList", bookingService.getCityDatas());
 		model.addAttribute("seatStatus", bookingService.getSeatStatusDetails());
 		return new ModelAndView("adminShowSeat");
 	}
 	
-	@RequestMapping("/ShowSeatList")
-	public List<ShowSeat> getShowSeatList() {
+	@RequestMapping("/show-seat-list")
+	public List<ShowSeatDTO> getShowSeatList() {
 		return bookingService.getShowSeatLists();
 	}
 	
 	
-	@RequestMapping("/ShowSeatDetails/{id}")
-	public List<ShowSeat> getShowSeatDetail(@PathVariable("id") int id) {
+	@RequestMapping("/show-seat-details/{id}")
+	public List<ShowSeatDTO> getShowSeatDetail(@PathVariable("id") int id) {
 		return bookingService.getShowSeatDetails(id);
 	}
 	
@@ -50,7 +50,7 @@ public class ShowSeatController {
 //		bookingService.showSeat(showSeat);
 //	}
 
-	@DeleteMapping("/DeleteShowSeat/{id}")
+	@DeleteMapping("/delete-show-seat/{id}")
 	public void deleteShowSeat(@PathVariable int id) {
 		bookingService.deleteShowSeats(id);
 	}	

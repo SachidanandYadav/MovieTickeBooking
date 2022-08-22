@@ -83,7 +83,7 @@
 					</div>
 					</div>
 						<div class="modal-footer">
-							<a href="/MovieTickectBooking/ShowDetailPage"><button type="button" class="btn btn-danger">Back</button></a>
+							<a href="/MovieTickectBooking/show-detail-page"><button type="button" class="btn btn-danger">Back</button></a>
 							<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  onclick="payment()">Payment</button>
 						</div>
 				</div>

@@ -2,101 +2,105 @@ package com.v2stech.movieticketbooking.service;
 
 import java.util.List;
 
-import com.v2stech.movieticketbooking.model.CinemaHall;
-import com.v2stech.movieticketbooking.model.CinemaSeat;
-import com.v2stech.movieticketbooking.model.City;
-import com.v2stech.movieticketbooking.model.Country;
-import com.v2stech.movieticketbooking.model.Customer;
-import com.v2stech.movieticketbooking.model.Movie;
-import com.v2stech.movieticketbooking.model.MovieShow;
-import com.v2stech.movieticketbooking.model.PaymentMethod;
-import com.v2stech.movieticketbooking.model.SeatStatus;
-import com.v2stech.movieticketbooking.model.ShowSeat;
-import com.v2stech.movieticketbooking.model.State;
-import com.v2stech.movieticketbooking.model.UserCredentials;
-import com.v2stech.movieticketbooking.model.AdminBookedTicket;
+import com.v2stech.movieticketbooking.model.BookedTicketDTO;
+import com.v2stech.movieticketbooking.model.CinemaHallDTO;
+import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
+import com.v2stech.movieticketbooking.model.CityDTO;
+import com.v2stech.movieticketbooking.model.CountryDTO;
+import com.v2stech.movieticketbooking.model.CustomerDTO;
+import com.v2stech.movieticketbooking.model.MovieDTO;
+import com.v2stech.movieticketbooking.model.MovieShowDTO;
+import com.v2stech.movieticketbooking.model.PaymentMethodDTO;
+import com.v2stech.movieticketbooking.model.SeatStatusDTO;
+import com.v2stech.movieticketbooking.model.ShowSeatDTO;
+import com.v2stech.movieticketbooking.model.StateDTO;
+import com.v2stech.movieticketbooking.model.UserCredentialsDTO;
 
 public interface MovieTicketBookingService {
 
-	void saveCustomerData(Customer customer);
+	void saveCustomerData(CustomerDTO customer);
 
-	List<City> getCityDatas();
+	List<CityDTO> getCityDatas();
 
-	List<State> getStateDatas();
+	List<StateDTO> getStateDatas();
 
-	List<Country> getCountryData();
+	List<CountryDTO> getCountryData();
 
-	String getUserCredentials(UserCredentials credentials);
+	String getUserCredentials(UserCredentialsDTO credentials);
 
-	List<Movie> getMovieDetails();
+	List<MovieDTO> getMovieDetails();
 
-	List<Movie> getMovieList();
+	List<MovieDTO> getMovieList();
 
-	List<Movie> getMovieById(String id);
+	MovieDTO getMovieById(String id);
 
-	void movies(Movie movie);
+	void movies(MovieDTO movie);
 
 	void deleteMovie(String id);
 
-	Movie getMovieSingleDetail(String movieName);
+	MovieDTO getMovieSingleDetail(String movieName);
 
-	List<AdminBookedTicket> getBookedList();
+	List<BookedTicketDTO> getBookedList();
 
 	void deleteBooking(int id);
 
-	List<MovieShow> getMovieShowLists();
+	List<MovieShowDTO> getMovieShowLists();
 
-	List<CinemaHall> getCinemaHallList(int id);
+	List<CinemaHallDTO> getCinemaHallList(int id);
 
-	List<MovieShow> getMovieShowById(int id);
+	MovieShowDTO getMovieShowById(int id);
 
-	void movieShow(MovieShow movieShow);
+	void movieShow(MovieShowDTO movieShow);
 
 	void deleteMovieShows(int id);
 
-	List<CinemaHall> getCinemaHallLists();
+	List<CinemaHallDTO> getCinemaHallLists();
 
-	List<CinemaHall> getSingleCinemaHalls(int id);
+	CinemaHallDTO getSingleCinemaHalls(int id);
 
-	List<City> getCityLists(int id);
+	List<CityDTO> getCityLists(int id);
 
-	void cinemaHalls(CinemaHall cinemaHall);
+	void cinemaHalls(CinemaHallDTO cinemaHall);
 
 	void deleteCinemaHalls(int id);
 
-	List<CinemaSeat> getCinemaSeatLists();
+	List<CinemaSeatDTO> getCinemaSeatLists();
 
-	List<CinemaSeat> getSingleCinemaSeats(int id);
+	CinemaSeatDTO getSingleCinemaSeats(int id);
 
-	List<CinemaSeat> getCinemaSeatTypes();
+	List<CinemaSeatDTO> getCinemaSeatTypes();
 
-	void CinemaSeats(CinemaSeat cinemaSeat);
+	void cinemaSeats(CinemaSeatDTO cinemaSeat);
 
 	void deleteCinemaSeats(int id);
 
-	List<ShowSeat> getShowSeatLists();
+	List<ShowSeatDTO> getShowSeatLists();
 
-	List<SeatStatus> getSeatStatusDetails();
+	List<SeatStatusDTO> getSeatStatusDetails();
 
-	List<ShowSeat> getShowSeatDetails(int id);
+	List<ShowSeatDTO> getShowSeatDetails(int id);
 
-	List<ShowSeat> getSingleShowSeats(int id);
+	ShowSeatDTO getSingleShowSeats(int id);
 
 	// void showSeat(ShowSeat showSeat);
 
 	void deleteShowSeats(int id);
 	
-	List<MovieShow> getMovieShowByHall(int id,String title);
+	List<MovieShowDTO> getMovieShowByHall(int id,String title);
 	
-	List<CinemaSeat> getTotalSeats(int seatType);
+	CinemaSeatDTO getTotalSeats(int seatType);
 	
-	List<PaymentMethod> getPaymentMethods();
+	List<PaymentMethodDTO> getPaymentMethods();
 	
-	void setBookingDetails(AdminBookedTicket bookedTicket);
+	void setBookingDetails(BookedTicketDTO bookedTicket);
 	
-	List<AdminBookedTicket> getBookingHistoryLists(String userName);
+	List<BookedTicketDTO> getBookingHistoryLists(String userName);
 	
-	 List<AdminBookedTicket> getPaymentDetails(int bookingId);
+	 BookedTicketDTO getPaymentDetails(int bookingId);
+	 
+	 CustomerDTO getUserProfiles(String userName);
+	 
+	 void getUpdateCustomers(CustomerDTO customer);
 	
 	
 	//int getTotalSeatPrice(int totalSeat);

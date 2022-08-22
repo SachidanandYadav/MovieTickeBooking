@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.v2stech.movieticketbooking.model.CinemaSeat;
+import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 @RestController
@@ -21,7 +21,7 @@ public class CinemaSeatController {
 	@Autowired
 	MovieTicketBookingService bookingService;
 	
-	@RequestMapping("/cinemaSeat")
+	@RequestMapping("/cinema-seat")
 	public ModelAndView getcinemaSeatDeatil(Model model) {
 		model.addAttribute("cityList", bookingService.getCityDatas());
 		model.addAttribute("seatType", bookingService.getCinemaSeatTypes());
@@ -29,24 +29,24 @@ public class CinemaSeatController {
 	}
 	
 	
-	@RequestMapping("/cinemaSeatList")
-	public List<CinemaSeat> getCinemaSeatList() {
+	@RequestMapping("/cinema-seat-list")
+	public List<CinemaSeatDTO> getCinemaSeatList() {
 		return bookingService.getCinemaSeatLists();
 	}
 	
 	
-	@RequestMapping("/cinemaSeat/{id}")
-	public List<CinemaSeat> getSingleCinemaSeat(@PathVariable("id") int id) {
+	@RequestMapping("/cinema-seat/{id}")
+	public CinemaSeatDTO getSingleCinemaSeat(@PathVariable("id") int id) {
 		return  bookingService.getSingleCinemaSeats(id);
 	}
 	
 
-	@PostMapping("/CinemaSeat")
-	public void cinemaHall(@RequestBody CinemaSeat cinemaSeat) {
-		bookingService.CinemaSeats(cinemaSeat);
+	@PostMapping("/cinema-seat")
+	public void cinemaHall(@RequestBody CinemaSeatDTO cinemaSeat) {
+		bookingService.cinemaSeats(cinemaSeat);
 	}
 
-	@DeleteMapping("/DeleteCinemaSeat/{id}")
+	@DeleteMapping("/delete-cinema-seat/{id}")
 	public void deleteCinemaSeat(@PathVariable int id) {
 		bookingService.deleteCinemaSeats(id);
 	}

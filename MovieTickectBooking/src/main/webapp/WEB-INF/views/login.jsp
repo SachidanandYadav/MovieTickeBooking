@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ page isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,13 +18,6 @@
 </head>
 <body>
 
-		<div id="failure" class="col-sm-12" style="display: none;">
-			<div class="alert alert-danger">
-				<strong><em class="fa fa-thumbs-down"></em> </strong>
-				<span>Failed !!</span>
-			</div>
-		</div>
-		
 		<div id="error" class="col-sm-12" style="display: none;">
 			<div class="alert alert-danger">
 				<strong><em class="fa fa-thumbs-down"></em> </strong>
@@ -31,22 +25,18 @@
 			</div>
 		</div>
 	<div class="container mt-5">
-	<div id="error" class="col-sm-12" style="display: none;">
-			<div class="alert alert-danger">
-				<strong><em class="fa fa-thumbs-down"></em> </strong> 
-				<span>Wrong User Credentials !!</span>
-			</div>
-		</div>
 		<div class="row m-auto p-4 mt-2">
 			<div class="col-md-4 jumbotron offset-md-4 ">
 				<h3 class="text-center">Login here</h3>
 					<div class="form-group ">
-						<label for="email">Email</label> 
-						<input type="text" class="form-control" id="username" placeholder="Enter UsreName">  
+						<label for="email">UserName</label> 
+						<input type="text" class="form-control" id="username" placeholder="Enter UserName" name="userName" > 
+						<span id="userNameError" class="error"></span>
 					</div>
 					<div class="form-group ">
 						<label for="password">Password</label> 
-						<input type="password" class="form-control" id="password" placeholder="Enter Password">
+						<input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+						<span id="passwordError" class="error"></span>
 					</div>
 				<div class="form-check mb-2">
 					<input class="form-check-input" type="checkbox" value=0 onchange='handleChange(this);'id="adminlogin"> 

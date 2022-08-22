@@ -8,19 +8,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.v2stech.movieticketbooking.dao.MovieTickectBookingDAO;
-import com.v2stech.movieticketbooking.model.CinemaHall;
-import com.v2stech.movieticketbooking.model.CinemaSeat;
-import com.v2stech.movieticketbooking.model.City;
-import com.v2stech.movieticketbooking.model.Country;
-import com.v2stech.movieticketbooking.model.Customer;
-import com.v2stech.movieticketbooking.model.Movie;
-import com.v2stech.movieticketbooking.model.MovieShow;
-import com.v2stech.movieticketbooking.model.PaymentMethod;
-import com.v2stech.movieticketbooking.model.SeatStatus;
-import com.v2stech.movieticketbooking.model.ShowSeat;
-import com.v2stech.movieticketbooking.model.State;
-import com.v2stech.movieticketbooking.model.UserCredentials;
-import com.v2stech.movieticketbooking.model.AdminBookedTicket;
+import com.v2stech.movieticketbooking.model.BookedTicketDTO;
+import com.v2stech.movieticketbooking.model.CinemaHallDTO;
+import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
+import com.v2stech.movieticketbooking.model.CityDTO;
+import com.v2stech.movieticketbooking.model.CountryDTO;
+import com.v2stech.movieticketbooking.model.CustomerDTO;
+import com.v2stech.movieticketbooking.model.MovieDTO;
+import com.v2stech.movieticketbooking.model.MovieShowDTO;
+import com.v2stech.movieticketbooking.model.PaymentMethodDTO;
+import com.v2stech.movieticketbooking.model.SeatStatusDTO;
+import com.v2stech.movieticketbooking.model.ShowSeatDTO;
+import com.v2stech.movieticketbooking.model.StateDTO;
+import com.v2stech.movieticketbooking.model.UserCredentialsDTO;
 
 @Service
 public class MovieTicketBookingServiceImpl implements MovieTicketBookingService {
@@ -31,51 +31,60 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	
-	private List<MovieShow> singleShow;
-	private	List<CinemaSeat> singleSeats;
+	private List<MovieShowDTO> singleShow;
+	private	CinemaSeatDTO singleSeats;
 
 	@Override
-	public void saveCustomerData(Customer customer) {
+	public void saveCustomerData(CustomerDTO customer) {
 		movieTickectBookingDAO.saveCustomerDatas(customer);
 	}
 
 	@Override
-	public List<City> getCityDatas() {
+	public List<CityDTO> getCityDatas() {
 		return movieTickectBookingDAO.getCityData();
 	}
 
 	@Override
-	public List<Country> getCountryData() {
+	public List<CountryDTO> getCountryData() {
 		return movieTickectBookingDAO.getCountryDatas();
 	}
 
 	@Override
-	public String getUserCredentials(UserCredentials credentials) {
+	public String getUserCredentials(UserCredentialsDTO credentials) {
 		String viewNameString = "";
-		System.out.println(credentials.getIsAdmin());
 		if (credentials.getIsAdmin() == 1) {
-
-			List<UserCredentials> admin = jdbcTemplate.query(
-					"select * from adminCredential where adminUserName='" + credentials.getUser_name()
-							+ "'and password='" + credentials.getPassword() + "'",
-					new BeanPropertyRowMapper<UserCredentials>(UserCredentials.class));
-			if (!admin.isEmpty()) {
-				viewNameString = "adminDashboardPage";
-			} else {
-				System.out.println("Wrong Credential");
-			}
+			
+//			if (credentials.getUser_name().isEmpty() || credentials.getPassword().isEmpty()) {
+//				throw new EmptyInputExcaption("msg", "Input Filed are empty");
+//			} else {
+				List<UserCredentialsDTO> admin = jdbcTemplate.query(
+						"select * from adminCredential where adminUserName='" + credentials.getUser_name()
+								+ "'and password='" + credentials.getPassword() + "'",
+						new BeanPropertyRowMapper<UserCredentialsDTO>(UserCredentialsDTO.class));
+				if (!admin.isEmpty()) {
+					viewNameString = "admin-dashboard-page";
+				} else {
+					System.out.println("Wrong Credential");
+					//throw new EmptyInputExcaption("msg", "Input Filed are empty");
+				}
+//			}
 
 		} else if (credentials.getIsAdmin() == 0) {
 
-			List<UserCredentials> user = jdbcTemplate.query(
-					"select * from user_credentials where user_name='" + credentials.getUser_name() + "'and password='"
-							+ credentials.getPassword() + "'",
-					new BeanPropertyRowMapper<UserCredentials>(UserCredentials.class));
-			if (!user.isEmpty()) {
-				viewNameString = "dashboardPage";
-			} else {
-				System.out.println("Wrong Credential");
-			}
+//			if (credentials.getUser_name().isEmpty() || credentials.getPassword().isEmpty()) {
+//				throw new EmptyInputExcaption("msg", "Input Filed are empty");
+//			} else {
+				List<UserCredentialsDTO> user = jdbcTemplate.query(
+						"select * from user_credentials where user_name='" + credentials.getUser_name()
+								+ "'and password='" + credentials.getPassword() + "'",
+						new BeanPropertyRowMapper<UserCredentialsDTO>(UserCredentialsDTO.class));
+				if (!user.isEmpty()) {
+					viewNameString = "dashboard-page";
+				} else {
+					System.out.println("Wrong Credential");
+				}
+
+//			}
 
 		} else {
 
@@ -84,22 +93,22 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<Movie> getMovieDetails() {
+	public List<MovieDTO> getMovieDetails() {
 		return movieTickectBookingDAO.getMovieDetail();
 	}
 
 	@Override
-	public List<Movie> getMovieList() {
+	public List<MovieDTO> getMovieList() {
 		return getMovieDetails();
 	}
 
 	@Override
-	public List<Movie> getMovieById(String id) {
+	public MovieDTO getMovieById(String id) {
 		return movieTickectBookingDAO.getMovieByIds(id);
 	}
 
 	@Override
-	public void movies(Movie movie) {
+	public void movies(MovieDTO movie) {
 		if (movie.getMovie_id() == 0) {
 			movieTickectBookingDAO.addMovie(movie);
 		} else {
@@ -113,8 +122,8 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public Movie getMovieSingleDetail(String movieName) {
-		for (Movie movie : getMovieDetails()) {
+	public MovieDTO getMovieSingleDetail(String movieName) {
+		for (MovieDTO movie : getMovieDetails()) {
 			if (movie.getTitle().equals(movieName)) {
 				return movie;
 			}
@@ -123,7 +132,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<AdminBookedTicket> getBookedList() {
+	public List<BookedTicketDTO> getBookedList() {
 		return movieTickectBookingDAO.getBookedLists();
 	}
 
@@ -133,22 +142,22 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<MovieShow> getMovieShowLists() {
+	public List<MovieShowDTO> getMovieShowLists() {
 		return movieTickectBookingDAO.getMovieShowDetails();
 	}
 
 	@Override
-	public List<CinemaHall> getCinemaHallList(int id) {
+	public List<CinemaHallDTO> getCinemaHallList(int id) {
 		return movieTickectBookingDAO.getCinemaHallLists(id);
 	}
 
 	@Override
-	public List<MovieShow> getMovieShowById(int id) {
+	public MovieShowDTO getMovieShowById(int id) {
 		return movieTickectBookingDAO.getMovieShowByIds(id);
 	}
 
 	@Override
-	public void movieShow(MovieShow movieShow) {
+	public void movieShow(MovieShowDTO movieShow) {
 		if (movieShow.getShow_id() == 0) {
 			movieTickectBookingDAO.addMovieShow(movieShow);
 		} else {
@@ -164,27 +173,27 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<State> getStateDatas() {
+	public List<StateDTO> getStateDatas() {
 		return movieTickectBookingDAO.getStateData();
 	}
 
 	@Override
-	public List<CinemaHall> getCinemaHallLists() {
+	public List<CinemaHallDTO> getCinemaHallLists() {
 		return movieTickectBookingDAO.getCinemaHallList();
 	}
 
 	@Override
-	public List<CinemaHall> getSingleCinemaHalls(int id) {
+	public CinemaHallDTO getSingleCinemaHalls(int id) {
 		return movieTickectBookingDAO.getSingleCinemaHall(id);
 	}
 
 	@Override
-	public List<City> getCityLists(int id) {
+	public List<CityDTO> getCityLists(int id) {
 		return movieTickectBookingDAO.getCityList(id);
 	}
 
 	@Override
-	public void cinemaHalls(CinemaHall cinemaHall) {
+	public void cinemaHalls(CinemaHallDTO cinemaHall) {
 		if (cinemaHall.getHall_id() == 0) {
 			movieTickectBookingDAO.addCinemaHall(cinemaHall);
 		} else {
@@ -199,22 +208,22 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<CinemaSeat> getCinemaSeatLists() {
+	public List<CinemaSeatDTO> getCinemaSeatLists() {
 		return movieTickectBookingDAO.getCinemaSeatList();
 	}
 
 	@Override
-	public List<CinemaSeat> getSingleCinemaSeats(int id) {
+	public CinemaSeatDTO getSingleCinemaSeats(int id) {
 		return movieTickectBookingDAO.getSingleCinemaSeat(id);
 	}
 
 	@Override
-	public List<CinemaSeat> getCinemaSeatTypes() {
+	public List<CinemaSeatDTO> getCinemaSeatTypes() {
 		return movieTickectBookingDAO.getCinemaSeatType();
 	}
 
 	@Override
-	public void CinemaSeats(CinemaSeat cinemaSeat) {
+	public void cinemaSeats(CinemaSeatDTO cinemaSeat) {
 		if (cinemaSeat.getCinemaSeat_id() == 0) {
 			movieTickectBookingDAO.addCinemaSeat(cinemaSeat);
 		} else {
@@ -228,22 +237,22 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<ShowSeat> getShowSeatLists() {
+	public List<ShowSeatDTO> getShowSeatLists() {
 		return movieTickectBookingDAO.getShowSeatList();
 	}
 
 	@Override
-	public List<SeatStatus> getSeatStatusDetails() {
+	public List<SeatStatusDTO> getSeatStatusDetails() {
 		return movieTickectBookingDAO.getSeatStatus();
 	}
 
 	@Override
-	public List<ShowSeat> getShowSeatDetails(int id) {
+	public List<ShowSeatDTO> getShowSeatDetails(int id) {
 		return movieTickectBookingDAO.getShowSeatDetail(id);
 	}
 
 	@Override
-	public List<ShowSeat> getSingleShowSeats(int id) {
+	public ShowSeatDTO getSingleShowSeats(int id) {
 		return movieTickectBookingDAO.getSingleShowSeat(id);
 	}
 
@@ -254,42 +263,50 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public List<MovieShow> getMovieShowByHall(int id,String title) {
+	public List<MovieShowDTO> getMovieShowByHall(int id,String title) {
 		this.singleShow = movieTickectBookingDAO.getMovieShowByHallId(id,title);
 		return 	movieTickectBookingDAO.getMovieShowByHallId(id,title);
 	}
 
 	@Override
-	public List<CinemaSeat> getTotalSeats(int seatType) {
+	public CinemaSeatDTO getTotalSeats(int seatType) {
 		this.singleSeats = movieTickectBookingDAO.getTotalSeat(seatType);
 		return movieTickectBookingDAO.getTotalSeat( seatType);
 	}
 
 	@Override
-	public List<PaymentMethod> getPaymentMethods() {
+	public List<PaymentMethodDTO> getPaymentMethods() {
 		return movieTickectBookingDAO.getPaymentMethod();
 	}
 
 	@Override
-	public void setBookingDetails(AdminBookedTicket bookedTicket) {
+	public void setBookingDetails(BookedTicketDTO bookedTicket) {
 		int totalSeat=0;
-		for(CinemaSeat seat : singleSeats) {
-		totalSeat = seat.getSeat()-bookedTicket.getSeat();
-		}
-		
-		for(MovieShow show : singleShow) {
+		totalSeat = singleSeats.getSeat()-bookedTicket.getSeat();
+		for(MovieShowDTO show : singleShow) {
 			movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShow_id(),totalSeat);
 		}
 	}
 
 	@Override
-	public List<AdminBookedTicket> getBookingHistoryLists(String userName) {
+	public List<BookedTicketDTO> getBookingHistoryLists(String userName) {
 		return movieTickectBookingDAO.getBookingHistoryList(userName);
 	}
 
 	@Override
-	public List<AdminBookedTicket> getPaymentDetails(int bookingId) {
+	public BookedTicketDTO getPaymentDetails(int bookingId) {
 		return movieTickectBookingDAO.getPaymentDetail(bookingId);
+	}
+
+	@Override
+	public CustomerDTO getUserProfiles(String userName) {
+		return movieTickectBookingDAO.getUserProfile(userName);
+	}
+
+	@Override
+	public void getUpdateCustomers(CustomerDTO customer) {
+		movieTickectBookingDAO.getUpdateCustomer(customer);
+		
 	}
 
 	

@@ -37,14 +37,14 @@ text-decoration: none !important;
   <%@include file="adminHeaderPage.jsp"%>
   <div class="container">
   <div class="row">
-  <div class="col-8 col-md-3 " ><a class="link" href="/MovieTickectBooking/bookingPage">Booked Ticket</a></div>
-  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/Movie">Movie</a></div>
-  <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/movieShow">Movie Show</a></div>
+  <div class="col-8 col-md-3 " ><a class="link" href="/MovieTickectBooking/booking-page">Booked Ticket</a></div>
+  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/movie">Movie</a></div>
+  <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/movie-show">Movie Show</a></div>
 </div>
 <div class="row">
-  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/showSeat">Show Seat</a></div>
-  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/cinemaHall">Cinema Hall</a></div>
-  <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/cinemaSeat">Cinema Seat</a></div>
+  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/show-seat">Show Seat</a></div>
+  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/cinema-hall">Cinema Hall</a></div>
+  <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/cinema-seat">Cinema Seat</a></div>
 </div>
 	</div>
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
