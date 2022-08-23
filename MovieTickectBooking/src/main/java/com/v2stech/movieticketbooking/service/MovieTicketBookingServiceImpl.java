@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.v2stech.movieticketbooking.dao.MovieTickectBookingDAO;
+import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
@@ -50,41 +51,31 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public String getUserCredentials(UserCredentialsDTO credentials) {
+	public String getUserCredentials(UserCredentialsDTO credentials) throws InvalidCredentialException {
 		String viewNameString = "";
 		if (credentials.getIsAdmin() == 1) {
-			
-//			if (credentials.getUser_name().isEmpty() || credentials.getPassword().isEmpty()) {
-//				throw new EmptyInputExcaption("msg", "Input Filed are empty");
-//			} else {
 				List<UserCredentialsDTO> admin = jdbcTemplate.query(
-						"select * from adminCredential where adminUserName='" + credentials.getUser_name()
+						"select * from adminCredential where adminUserName='" + credentials.getUserName()
 								+ "'and password='" + credentials.getPassword() + "'",
 						new BeanPropertyRowMapper<UserCredentialsDTO>(UserCredentialsDTO.class));
 				if (!admin.isEmpty()) {
 					viewNameString = "admin-dashboard-page";
 				} else {
-					System.out.println("Wrong Credential");
-					//throw new EmptyInputExcaption("msg", "Input Filed are empty");
+					throw new InvalidCredentialException("Input Filed are empty");
 				}
-//			}
 
 		} else if (credentials.getIsAdmin() == 0) {
 
-//			if (credentials.getUser_name().isEmpty() || credentials.getPassword().isEmpty()) {
-//				throw new EmptyInputExcaption("msg", "Input Filed are empty");
-//			} else {
 				List<UserCredentialsDTO> user = jdbcTemplate.query(
-						"select * from user_credentials where user_name='" + credentials.getUser_name()
+						"select * from user_credentials where user_name='" + credentials.getUserName()
 								+ "'and password='" + credentials.getPassword() + "'",
 						new BeanPropertyRowMapper<UserCredentialsDTO>(UserCredentialsDTO.class));
 				if (!user.isEmpty()) {
 					viewNameString = "dashboard-page";
 				} else {
-					System.out.println("Wrong Credential");
+					throw new InvalidCredentialException("Invalid Credential");
 				}
 
-//			}
 
 		} else {
 

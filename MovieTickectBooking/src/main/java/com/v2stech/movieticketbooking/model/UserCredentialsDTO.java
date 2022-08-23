@@ -1,6 +1,6 @@
 package com.v2stech.movieticketbooking.model;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
@@ -13,10 +13,10 @@ import lombok.Data;
 @JsonIgnoreProperties
 public class UserCredentialsDTO {
 
-	@NotBlank(message="User Name Can not be empty")
-	@JsonProperty(value = "userName")
-	private String user_name;
-	@NotBlank(message="Password Can not be empty")
+	@NotEmpty(message="User Name Can not be empty")
+	@JsonProperty(value = "username")
+	private String userName;
+	@NotEmpty(message="Password Can not be empty")
 	private String password;
 	private int isAdmin;
 	

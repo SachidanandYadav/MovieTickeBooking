@@ -20,8 +20,8 @@
 
 		<div id="error" class="col-sm-12" style="display: none;">
 			<div class="alert alert-danger">
-				<strong><em class="fa fa-thumbs-down"></em> </strong>
-				<span>Something went wrong !!</span>
+				<strong><em class="fa fa-thumbs-down"></em> &nbsp;</strong>
+				<span id="error1"></span>
 			</div>
 		</div>
 	<div class="container mt-5">
@@ -30,8 +30,8 @@
 				<h3 class="text-center">Login here</h3>
 					<div class="form-group ">
 						<label for="email">UserName</label> 
-						<input type="text" class="form-control" id="username" placeholder="Enter UserName" name="userName" > 
-						<span id="userNameError" class="error"></span>
+						<input type="text" class="form-control" id="username" placeholder="Enter UserName" name="userName" required="required"> 
+						<span id="usernameError" class="error"></span>
 					</div>
 					<div class="form-group ">
 						<label for="password">Password</label> 
@@ -45,7 +45,7 @@
 				<button type="submit" id="login" class="btn btn-primary btn-block">Submit</button>
 					
 					<div class="text-center mt-3">
-					<a href="/MovieTickectBooking/RegisterPage">Create Account</a>
+					<a href="/MovieTickectBooking/register-page">Create Account</a>
 					</div>
 			</div>
 		</div>

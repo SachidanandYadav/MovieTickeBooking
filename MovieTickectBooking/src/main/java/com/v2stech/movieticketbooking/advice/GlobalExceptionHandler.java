@@ -10,17 +10,21 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 
-import com.v2stech.movieticketbooking.exception.EmptyInputExcaption;
+import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 
 @ControllerAdvice
-public class MyControllerAdvice {
+public class GlobalExceptionHandler {
 
 	
-	@ExceptionHandler(EmptyInputExcaption.class)
-	public ResponseEntity<String> handleEmptyInput(EmptyInputExcaption emptyInputExcaption){ 
-		return new ResponseEntity<String>("Input Filed are empty please Enter some thing!!", HttpStatus.BAD_REQUEST);
-	}
+	/*
+	 * @ExceptionHandler(InvalidCredentialException.class) public
+	 * ResponseEntity<String> handleEmptyInput(InvalidCredentialException
+	 * emptyInputExcaption){ return new
+	 * ResponseEntity<String>("Input Filed are empty please Enter some thing!!",
+	 * HttpStatus.BAD_REQUEST); }
+	 */
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> getMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -32,4 +36,11 @@ public class MyControllerAdvice {
 		}
 		return new ResponseEntity<Map<String, String>>(errorMessage, HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(InvalidCredentialException.class)
+	public ResponseEntity<String> getInvalidCredentialException(InvalidCredentialException exception){
+		return new ResponseEntity<String>("Invalid Credential!!",HttpStatus.NOT_FOUND);
+	}
+	
+	
 }

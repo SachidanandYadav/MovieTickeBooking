@@ -2,6 +2,7 @@ package com.v2stech.movieticketbooking.service;
 
 import java.util.List;
 
+import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
@@ -26,7 +27,7 @@ public interface MovieTicketBookingService {
 
 	List<CountryDTO> getCountryData();
 
-	String getUserCredentials(UserCredentialsDTO credentials);
+	String getUserCredentials(UserCredentialsDTO credentials) throws InvalidCredentialException;
 
 	List<MovieDTO> getMovieDetails();
 

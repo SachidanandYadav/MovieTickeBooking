@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
 import com.v2stech.movieticketbooking.model.CityDTO;
@@ -44,7 +45,7 @@ public class HomeController {
 	private List<MovieShowDTO> movieShowDetail;
 
 	@RequestMapping("/login-page")
-	public ModelAndView getLoginPage(Model model) {
+	public ModelAndView getLoginPage() {
 		return new ModelAndView("login");
 	}
 
@@ -62,12 +63,11 @@ public class HomeController {
 
 	@PostMapping("/login-customer")
 	public String loginCustomer(@Valid @RequestBody UserCredentialsDTO user, BindingResult result)
-			throws MethodArgumentNotValidException {
+			throws MethodArgumentNotValidException, InvalidCredentialException {
 		if (result.hasErrors()) {
-			System.out.println("Error in form");
 			throw new MethodArgumentNotValidException(null, result);
 		} else {
-			userName = user.getUser_name();
+			userName = user.getUserName();
 			return bookingService.getUserCredentials(user);
 		}
 
