@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getMovieShowData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/movie-show-list",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/movie-show-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -29,7 +29,7 @@ $(document).ready(function(){
 	function selectCityOption(){
 		var id = $('#cityid').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall-list/" + id,
 			type: "GET",
 			success: function(response) {
 				$("#hallname").html("");
@@ -58,7 +58,7 @@ $("#MovieShow").on("click", function() {
 	movie.hallName = $('#hallname').val();
 	movie.title = $('#movie').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/movie-show",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/movie-show",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(movie),
@@ -83,7 +83,7 @@ $("#MovieShow").on("click", function() {
 	
 function editData(id) {	
 	$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/movie-show/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/movie-show/" + id,
 			type: "GET",
 			success: function(res) {
 				$('#showid').val(res.showId);
@@ -108,7 +108,7 @@ function editData(id) {
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/delete-movie-show/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-movie-show/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");

@@ -2,112 +2,12 @@ $(document).ready(function() {
 	/* getBookingHistory();*/
 });
 
-$("#addCustomer").on("click", function() {
-	var customer = {}
-	customer.firstName = $('#first_name').val();
-	customer.lastName = $('#last_name').val();
-	customer.email = $('#email').val();
-	customer.phone = $('#phone').val();
-	customer.birth = $('#birth').val();
-	customer.gender = $('#gender').val();
-	customer.addressLine1 = $('#addressLine1').val();
-	customer.addressLine2 = $('#addressLine2').val();
-	customer.cityId = $('#city').val();
-	customer.areaPincode = $('#areaPincode').val();
-	customer.userName = $('#username').val();
-	customer.password = $('#password').val();
-	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/customer",
-		type: "POST",
-		contentType: 'application/json',
-		data: JSON.stringify(customer),
-		success: function() {
-			$('#addSuccess').show();
-			resetAllFiled();
-			$("#addSuccess").delay(8000).fadeOut("slow");
-		},
-		error: function() {
-			$('#error').show();
-			$("#error").delay(8000).fadeOut("slow");
-		}
-	});
-});
-
-function check(filed, message) {
-	if (filed == "" || filed == null) {
-		$("#" + message + "Error").html(message + " is Required");
-		$("#" + message + "Error").show();
-		flag = false;
-	} else {
-		$("#" + message + "Error").hide();
-		flag = true;
-	}
-	return flag;
-}
-
-
-$("#login").on("click", function() {
-
-	var login = {}
-	login.isAdmin = $('#adminlogin').val();
-	login.username = $('#username').val();
-	login.password = $('#password').val();
-
-
-	var Username = check(login.username, "username");
-	var Password = check(login.password, "password");
-
-
-	if (Username && Password) {
-		$('#userNameError').html("");
-		$('#passwordError').html("");
-		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/login-customer",
-			type: "POST",
-			contentType: 'application/json',
-			data: JSON.stringify(login),
-			success: function(response) {
-				window.location.href = "/MovieTickectBooking/" + response;
-			},
-			error: function(message) {
-				$('#error1').html(message.responseText)
-				$('#error').show();
-				$("#error").delay(8000).fadeOut("slow");
-				$('#usernameError').html(message.responseJSON.userName);
-				$('#passwordError').html(message.responseJSON.password);
-			}
-		});
-	}
-});
-
-
-function resetAllFiled() {
-	$('#first_name').val('');
-	$('#last_name').val('');
-	$('#email').val('');
-	$('#phone').val('');
-	$('#birth').val('');
-	$('#addressLine1').val('');
-	$('#addressLine2').val('');
-	$('#city').val('');
-	$('#areaPincode').val('');
-	$('#user_name').val('');
-	$('#password').val('');
-}
-
-function handleChange(checkbox) {
-	if (checkbox.checked == true) {
-		$('#adminlogin').val("1");
-	} else {
-		$('#adminlogin').val("0");
-	}
-}
 
 
 function myFunction(movieName) {
 	$.ajax({
 		type: "GET",
-		url: "http://localhost:8080/MovieTickectBooking/movie-details/" + movieName,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/movie-details/" + movieName,
 		cache: false,
 		success: function(response) {
 			window.location.href = "/MovieTickectBooking/" + response;
@@ -124,7 +24,7 @@ function myFunction(movieName) {
 function selectCityOption() {
 	var id = $('#cityid').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall-list/" + id,
 		type: "GET",
 		success: function(response) {
 			$('#table-div').show();
@@ -149,7 +49,7 @@ function selectCityOption() {
 function movieShow(id) {
 	var title = $('#movieTitle').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/movie-show-detail/" + id + "/" + title,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/movie-show-detail/" + id + "/" + title,
 		type: "GET",
 		success: function(response) {
 			window.location.href = "/MovieTickectBooking/" + response;
@@ -170,7 +70,7 @@ function movieShow(id) {
 function totalSeat() {
 	var seatTypeId = $('#seatType').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/total-seat/" + seatTypeId,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/total-seat/" + seatTypeId,
 		type: "GET",
 		success: function(response) {
 			$('#totalSeat').val(response.seat);
@@ -206,7 +106,7 @@ function payment() {
 		booking.amount = $('#finalAmount').val();
 		booking.methodId = $('#paymentMentod').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/booking-detail",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/booking-detail",
 			type: "POST",
 			contentType: 'application/json',
 			data: JSON.stringify(booking),
@@ -235,7 +135,7 @@ function payment() {
 	});
 
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/payment-method",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/payment-method",
 		type: "GET",
 		success: function(response) {
 			$('#finalAmount').val(finalPrice);
@@ -259,7 +159,7 @@ function payment() {
 
 function getBookingHistory() {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/booking-history-list",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/booking-history-list",
 		type: "GET",
 		success: function(response) {
 			for (res in response) {
@@ -280,7 +180,7 @@ function getBookingHistory() {
 
 function paymentDetail(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/payment-detail/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/payment-detail/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#paymentAmout').val(res.amount);
@@ -306,7 +206,7 @@ function paymentDetail(id) {
 
 $("#editCustomer").on("click", function() {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/user-profile",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/user-profile",
 		type: "GET",
 		success: function(res) {
 			$('#customerId').val(res.customerId);
@@ -347,7 +247,7 @@ function updateCustomer() {
 	customer.cityId = $('#city').val();
 	customer.areaPincode = $('#areaPincode').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/update-customer",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/update-customer",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(customer),

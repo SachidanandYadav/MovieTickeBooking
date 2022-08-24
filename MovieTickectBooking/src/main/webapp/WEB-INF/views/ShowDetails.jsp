@@ -17,36 +17,41 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-	
-	<div class="container">		
-			<div class="col-md-12 table-section" >
-				<h1 class="mb-4">Movie Show Detail</h1>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Movie Show Detail</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody id="user-table">
+
+	<div class="container">
+		<div class="col-md-12 table-section">
+			<h1 class="mb-4">Movie Show Detail</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Movie Show Detail</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="user-table">
 					<c:forEach items="${movieShow}" var="movieShow">
-							<tr>
-							<td>Movie : ${movieShow.title}<br>
-							Description : ${movieShow.description}/Language : ${movieShow.language}<br>
-							Start Time : ${movieShow.startTime} / End Time : ${movieShow.endTime}
+						<tr>
+							<td>Movie : ${movieShow.title}<br> Description :
+								${movieShow.description}/Language : ${movieShow.language}<br>
+								Start Time : ${movieShow.startTime} / End Time :
+								${movieShow.endTime}
 							</td>
-							<td>
-							<a href="/MovieTickectBooking/show-booking-page"><button type="button" class="btn btn-danger">Booking</button></a>
-							</td>
-							</tr>
-						</c:forEach>
-					
-					</tbody>
-				</table>
-			</div>
+							<td><a href="/MovieTickectBooking/show-booking-page"><button
+										type="button" class="btn btn-danger">Booking</button></a></td>
+						</tr>
+					</c:forEach>
+
+				</tbody>
+			</table>
 		</div>
-	
-	
+
+		<div class="col-sm-3 back-button">
+			<a href="/MovieTickectBooking/movie-detail-page">
+			<button type="button" class="btn btn-danger">Back</button></a>
+		</div>
+	</div>
+
+
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
 </body>
 </html>

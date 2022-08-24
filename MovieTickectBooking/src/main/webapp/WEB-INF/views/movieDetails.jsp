@@ -47,26 +47,28 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container">
-	<div class="col-md-8" id="table-div">
-				<h1 class="mb-4">Cinema Hall</h1>
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Cinema Hall Name</th>
-							<th>Cinema Address</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody id="user-table">
-					</tbody>
-				</table>
-			</div>
-	
+		<div class="col-md-8" id="table-div">
+			<h1 class="mb-4">Cinema Hall</h1>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Cinema Hall Name</th>
+						<th>Cinema Address</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody id="user-table">
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-3 back-button">
+		<a href="/MovieTickectBooking/dashboard-page"><button type="button" class="btn btn-danger">Back</button></a>	
+		</div>
 	</div>
-	
-	
+
+
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
 </body>
 </html>

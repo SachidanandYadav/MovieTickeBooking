@@ -254,13 +254,13 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void saveCustomerDatas(CustomerDTO customer) {
 		jdbcTemplate.update(
 				"INSERT INTO customer(email,phone,first_name,last_name,birth,gender,addressLine1,addressLine2,areaPincode,city_id) VALUES(?,?,?,?,?,?,?,?,?,(select city_id from city where city_name=?))",
-				customer.getEmail(), customer.getPhone(), customer.getFirst_name(), customer.getLast_name(),
+				customer.getEmail(), customer.getPhone(), customer.getFirstName(), customer.getLastName(),
 				customer.getBirth(), customer.getGender(), customer.getAddressLine1(), customer.getAddressLine2(),
-				customer.getAreaPincode(), customer.getCity_id());
+				customer.getAreaPincode(), customer.getCityName());
 
 		jdbcTemplate.update(
 				"INSERT INTO user_credentials(user_name,password,customer_id) VALUES(?,?,(select customer_id from customer where email=?))",
-				customer.getUser_name(), customer.getPassword(), customer.getEmail());
+				customer.getUserName(), customer.getPassword(), customer.getEmail());
 	}
 
 	@Override
@@ -312,7 +312,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 
 	@Override
 	public void getUpdateCustomer(CustomerDTO customer) {
-		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",customer.getEmail(),customer.getPhone(),customer.getFirst_name(),customer.getLast_name(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCity_id(),customer.getCustomer_id());
+		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",customer.getEmail(),customer.getPhone(),customer.getFirstName(),customer.getLastName(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCityId(),customer.getCustomerId());
 	}
 
 	

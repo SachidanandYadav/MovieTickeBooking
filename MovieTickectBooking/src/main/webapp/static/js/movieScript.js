@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getAllData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/movie-list",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/movie-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -27,7 +27,7 @@ $(document).ready(function(){
 	
 function editData(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/movie/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/movie/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#movieid').val(res.movieId);
@@ -66,7 +66,7 @@ $("#Movie").on("click", function() {
 	movie.countryName = $('#country').val();
 	movie.imageUrl = $('#imageUrl').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/movie",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/movie",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(movie),
@@ -93,7 +93,7 @@ function deleteData(id) {
 
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/delete-movie/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-movie/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");

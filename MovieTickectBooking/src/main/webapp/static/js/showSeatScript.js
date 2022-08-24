@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getShowSeatData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/show-seat-list",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/show-seat-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	function selectOption(){
 		var id = $('#cityid').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall-list/" + id,
 			type: "GET",
 			success: function(response) {
 				$("#hallName").html("");
@@ -50,7 +50,7 @@ $(document).ready(function(){
 	function selectShowOption(){
 		var id = $('#hallName').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/show-seat-details/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/show-seat-details/" + id,
 			type: "GET",
 			success: function(response) {
 				$("#showTime").html("");
@@ -76,7 +76,7 @@ $(document).ready(function(){
 	
 	/*function editData(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/singleShowSeat/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/singleShowSeat/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#showid').val(res[0].showSeat_id);	
@@ -124,7 +124,7 @@ function resetAllFiled() {
 	seat.price = $('#price').val();
 	seat.seatStatus_id = $('#seatStatus').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/addShowSeat",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/addShowSeat",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(seat),
@@ -149,7 +149,7 @@ function resetAllFiled() {
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/DeleteShowSeat/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/DeleteShowSeat/" + id,
 			type: "DELETE",
 			success: function(response, status) {
 				$("#user-table").html("");

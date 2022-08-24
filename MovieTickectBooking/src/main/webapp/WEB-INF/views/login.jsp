@@ -31,12 +31,12 @@
 					<div class="form-group ">
 						<label for="email">UserName</label> 
 						<input type="text" class="form-control" id="username" placeholder="Enter UserName" name="userName" required="required"> 
-						<span id="usernameError" class="error"></span>
+						<span id="UsernameError" class="error"></span>
 					</div>
 					<div class="form-group ">
 						<label for="password">Password</label> 
 						<input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
-						<span id="passwordError" class="error"></span>
+						<span id="PasswordError" class="error"></span>
 					</div>
 				<div class="form-check mb-2">
 					<input class="form-check-input" type="checkbox" value=0 onchange='handleChange(this);'id="adminlogin"> 
@@ -50,6 +50,6 @@
 			</div>
 		</div>
 	</div>
-<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+<script type="text/javascript" src="<c:url value="/static/js/loginScript.js" />"></script>
 </body>
 </html>

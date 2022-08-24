@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getCinemaSeatData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-seat-list",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-seat-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	
 	function editData(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinema-seat/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-seat/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#cinemaSeatId').val(res.cinemaSeatId);
@@ -52,7 +52,7 @@ $(document).ready(function(){
 	function selectOption(){
 		var id = $('#cityid').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall-list/" + id,
 			type: "GET",
 			success: function(response) {
 				$("#hallName").html("");
@@ -91,7 +91,7 @@ function resetAllFiled() {
 	seat.hallName = $('#hallName').val();
 	seat.seatTypeId = $('#seatType').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinema-seat",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-seat",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(seat),
@@ -116,7 +116,7 @@ function resetAllFiled() {
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/delete-cinema-seat/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-cinema-seat/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");

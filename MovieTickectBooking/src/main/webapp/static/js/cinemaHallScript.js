@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getCinemaHallData() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-hall-list",
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -28,7 +28,7 @@ $(document).ready(function(){
 	
 	function editData(id) {
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinema-hall/" + id,
+		url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-hall/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#hallid').val(res.hallId);
@@ -57,7 +57,7 @@ $(document).ready(function(){
 	function selectOption(){
 		var id = $('#stateid').val();
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/cinema-state-list/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-state-list/" + id,
 			type: "GET",
 			success: function(response) {
 				$("#city").html("");
@@ -87,7 +87,7 @@ $(document).ready(function(){
 	hall.stateId = $('#stateid').val();
 	hall.stateName = $('#stateName').val();
 	$.ajax({
-		url: "http://localhost:8080/MovieTickectBooking/cinema-halls",
+		url: "http://192.168.20.204:8080/MovieTickectBooking/cinema-halls",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(hall),
@@ -112,7 +112,7 @@ $(document).ready(function(){
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://localhost:8080/MovieTickectBooking/delete-cinema-hall/" + id,
+			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-cinema-hall/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");

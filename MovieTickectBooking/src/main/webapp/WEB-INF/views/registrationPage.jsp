@@ -41,26 +41,31 @@
 						<div class="form-group col-md-6">
 							<label for="fname">First Name</label> 
 							<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+							<span id="FirstnameError" class="error"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="lname">Last Name</label> 
 							<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+							<span id="LastnameError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="email">Email</label> 
 							<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+							<span id="EmailError" class="error"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="phone">Phone</label> 
 							<input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone">
+							<span id="PhoneError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="birth">Birth Date</label> 
 							<input type="date" class="form-control" id="birth" name="birth" placeholder="Birth Date">
+							<span id="BirthError" class="error"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label class="col-sm-4 control-label">Gender</label>
@@ -73,10 +78,12 @@
 					<div class="form-group">
 						<label for="inputAddress">Address</label> 
 						<input type="text" class="form-control" id="addressLine1" name="addressLine1" placeholder="1234 Main St">
+						<span id="AddressError" class="error"></span>
 					</div>
 					<div class="form-group">
 						<label for="inputAddress2">Address 2</label> 
 						<input type="text" class="form-control" id="addressLine2" name="addressLine2" placeholder="Apartment, studio, or floor">
+						<span id="Address2Error" class="error"></span>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -87,29 +94,39 @@
 									<option value="${cityList.city_name}">${cityList.city_name}</option>
 								</c:forEach>
 							</select>
+							<span id="CityError" class="error"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="zip">Zip Code</label> 
 							<input type="text" class="form-control" id="areaPincode" name="areaPincode">
+							<span id="AreaPincodeError" class="error"></span>
 						</div>
 					</div>
 					 <div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="username">Username</label> 
 							<input type="text" class="form-control" id="username" placeholder="Username">
+							<span id="UsernameError" class="error"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="password">Password</label> 
 							<input type="password" class="form-control" id="password" placeholder="Password">
+							<span id="PasswordError" class="error"></span>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-primary" id="addCustomer">Sign in</button>
-					<button type="button" class="btn btn-danger">Back</button>
-				
+				<div class="form-row ">
+					<div class="form-group col-sm-2">
+						<button type="submit" class="btn btn-primary" id="addCustomer">Sign in</button>
+					</div>
+					<div class="form-group col-sm-3">
+						<button type="button" class="btn btn-danger">Back</button>
+					</div>
+				</div>
+
 			</div>
 		</div>
 	</div>
 	
-		<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+		<script type="text/javascript" src="<c:url value="/static/js/loginScript.js" />"></script>
 </body>
 </html>

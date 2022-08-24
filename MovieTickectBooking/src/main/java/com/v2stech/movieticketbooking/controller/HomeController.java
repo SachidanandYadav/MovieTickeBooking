@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
+import com.v2stech.movieticketbooking.exception.InvalidFiledException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
 import com.v2stech.movieticketbooking.model.CityDTO;
@@ -57,15 +57,19 @@ public class HomeController {
 	}
 
 	@PostMapping("/customer")
-	public void saveCustomer(@RequestBody CustomerDTO customer) {
-		bookingService.saveCustomerData(customer);
+	public void saveCustomer(@Valid @RequestBody CustomerDTO customer, BindingResult result) throws InvalidFiledException {
+		if (result.hasErrors()) {
+			throw new InvalidFiledException(result);
+		} else {
+			bookingService.saveCustomerData(customer);
+		}
 	}
 
 	@PostMapping("/login-customer")
 	public String loginCustomer(@Valid @RequestBody UserCredentialsDTO user, BindingResult result)
-			throws MethodArgumentNotValidException, InvalidCredentialException {
+			throws InvalidCredentialException, InvalidFiledException {
 		if (result.hasErrors()) {
-			throw new MethodArgumentNotValidException(null, result);
+			throw new InvalidFiledException(result);
 		} else {
 			userName = user.getUserName();
 			return bookingService.getUserCredentials(user);
