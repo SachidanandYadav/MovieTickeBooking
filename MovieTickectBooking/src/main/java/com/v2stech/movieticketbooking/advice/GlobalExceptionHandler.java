@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 import com.v2stech.movieticketbooking.exception.InvalidFiledException;
+import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,6 +30,11 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(InvalidCredentialException.class)
 	public ResponseEntity<String> getInvalidCredentialException(InvalidCredentialException exception){
+		return new ResponseEntity<String>(exception.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(InvalidSeatException.class)
+	public ResponseEntity<String> getInvalidSeatException(InvalidSeatException exception){
 		return new ResponseEntity<String>(exception.getMessage(),HttpStatus.NOT_FOUND);
 	}
 	

@@ -9,8 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-@JsonIgnoreType
-@JsonIgnoreProperties
 public class UserCredentialsDTO {
 
 	@NotEmpty(message="User Name Can not be empty")

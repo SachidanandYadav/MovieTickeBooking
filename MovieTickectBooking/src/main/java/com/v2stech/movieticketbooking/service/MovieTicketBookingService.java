@@ -3,6 +3,7 @@ package com.v2stech.movieticketbooking.service;
 import java.util.List;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
+import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
@@ -93,7 +94,7 @@ public interface MovieTicketBookingService {
 	
 	List<PaymentMethodDTO> getPaymentMethods();
 	
-	void setBookingDetails(BookedTicketDTO bookedTicket);
+	void setBookingDetails(BookedTicketDTO bookedTicket) throws InvalidSeatException;
 	
 	List<BookedTicketDTO> getBookingHistoryLists(String userName);
 	

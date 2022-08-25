@@ -15,9 +15,9 @@ function check(filed, message) {
 	return flag;
 }
 
-function AlphaPattern(field,message) {
-	var AlphaRegex = new RegExp('^[a-zA-Z]+$');
-	if (!AlphaRegex.test(field)) {
+function alphaPattern(field, message) {
+	var alphaRegex = new RegExp('^[a-zA-Z]+$');
+	if (!alphaRegex.test(field)) {
 		$("#" + message + "Error").html(message + " Filed is Required Only Alphabets");
 		$("#" + message + "Error").show();
 		flag = false;
@@ -29,7 +29,7 @@ function AlphaPattern(field,message) {
 }
 
 
-function NumberPattern(field,message) {
+function NumberPattern(field, message) {
 	var NumberRegex = new RegExp('^[0-9]*$');
 	if (!NumberRegex.test(field)) {
 		$("#" + message + "Error").html(message + " Filed is Required Only Numeric");
@@ -69,7 +69,7 @@ function phonelength(field) {
 }
 
 function pincodelength(field) {
-	if (field.length !=  6 ) {
+	if (field.length != 6) {
 		$("#AreaPincodeError").html("AreaPincode should be 6 digits");
 		$("#AreaPincodeError").show();
 		flag = false;
@@ -108,22 +108,22 @@ $("#addCustomer").on("click", function() {
 	var areaPincode = check(customer.areaPincode, "AreaPincode");
 	var username = check(customer.username, "Username");
 	var password = check(customer.password, "Password");
-	
-	
+
+
 	if (firstname && lastname) {
-		var firstnamePattern = AlphaPattern(customer.firstname, "Firstname");
-		var lastnamePattern = AlphaPattern(customer.lastname, "Lastname");
+		var firstnamePattern = alphaPattern(customer.firstname, "Firstname");
+		var lastnamePattern = alphaPattern(customer.lastname, "Lastname");
 	}
-	
+
 	if (phone && password && areaPincode) {
 		var phonePattern = NumberPattern(customer.phone, "Phone");
 		var passwordPattern = NumberPattern(customer.password, "Password");
 		var areaPincodePattren = NumberPattern(customer.areaPincode, "AreaPincode");
 	}
-	
-	var EmailPattern = emailPattern(customer.email) ;
-	
-	if(phonePattern){
+
+	var EmailPattern = emailPattern(customer.email);
+
+	if (phonePattern) {
 		var Phonelength = phonelength(customer.phone);
 	}
 
@@ -131,58 +131,45 @@ $("#addCustomer").on("click", function() {
 		var Pincodelength = pincodelength(customer.areaPincode);
 	}
 
-	
-
 	if (firstname && lastname && email && phone && birth && addressLine1 && addressLine2 && cityName && areaPincode && username && password && firstnamePattern && lastnamePattern && phonePattern && passwordPattern && areaPincodePattren && EmailPattern && Phonelength && Pincodelength) {
-	$('#FirstnameError').html("");
-	$('#LastnameError').html("");
-	$('#EmailError').html("");
-	$('#PhoneError').html("");
-	$('#BirthError').html("");
-	$('#AddressError').html("");
-	$('#Address2Error').html("");
-	$('#CityError').html("");
-	$('#AreaPincodeError').html("");
-	$('#UsernameError').html("");
-	$('#PasswordError').html("");
+		restAllError();
+		$.ajax({
+			url: "http://192.168.20.204:8080/MovieTickectBooking/customer",
+			type: "POST",
+			contentType: 'application/json',
+			data: JSON.stringify(customer),
+			success: function() {
+				$('#addSuccess').show();
+				resetAllFiled();
+				$("#addSuccess").delay(8000).fadeOut("slow");
+			},
+			error: function(message) {
+				$('#FirstnameError').html(message.responseJSON.firstName);
+				$('#FirstnameError').show();
+				$('#LastnameError').html(message.responseJSON.lastName);
+				$('#LastnameError').show();
+				$('#EmailError').html(message.responseJSON.email);
+				$('#EmailError').show();
+				$('#PhoneError').html(message.responseJSON.phone);
+				$('#PhoneError').show();
+				$('#BirthError').html(message.responseJSON.birth);
+				$('#BirthError').show();
+				$('#AddressError').html(message.responseJSON.addressLine1);
+				$('#AddressError').show();
+				$('#Address2Error').html(message.responseJSON.addressLine1);
+				$('#Address2Error').show();
+				$('#CityError').html(message.responseJSON.cityName);
+				$('#CityError').show();
+				$('#AreaPincodeError').html(message.responseJSON.areaPincode);
+				$('#AreaPincodeError').show();
+				$('#UsernameError').html(message.responseJSON.userName);
+				$('#UsernameError').show();
+				$('#PasswordError').html(message.responseJSON.password);
+				$('#PasswordError').show();
 
-	$.ajax({
-		url: "http://192.168.20.204:8080/MovieTickectBooking/customer",
-		type: "POST",
-		contentType: 'application/json',
-		data: JSON.stringify(customer),
-		success: function() {
-			$('#addSuccess').show();
-			resetAllFiled();
-			$("#addSuccess").delay(8000).fadeOut("slow");
-		},
-		error: function(message) {
-			$('#FirstnameError').html(message.responseJSON.firstName);
-			$('#FirstnameError').show();
-			$('#LastnameError').html(message.responseJSON.lastName);
-			$('#LastnameError').show();
-			$('#EmailError').html(message.responseJSON.email);
-			$('#EmailError').show();
-			$('#PhoneError').html(message.responseJSON.phone);
-			$('#PhoneError').show();
-			$('#BirthError').html(message.responseJSON.birth);
-			$('#BirthError').show();
-			$('#AddressError').html(message.responseJSON.addressLine1);
-			$('#AddressError').show();
-			$('#Address2Error').html(message.responseJSON.addressLine1);
-			$('#Address2Error').show();
-			$('#CityError').html(message.responseJSON.cityName);
-			$('#CityError').show();
-			$('#AreaPincodeError').html(message.responseJSON.areaPincode);
-			$('#AreaPincodeError').show();
-			$('#UsernameError').html(message.responseJSON.userName);
-			$('#UsernameError').show();
-			$('#PasswordError').html(message.responseJSON.password);
-			$('#PasswordError').show();
-
-		}
-	});
-		}
+			}
+		});
+	}
 });
 
 
@@ -213,7 +200,7 @@ $("#login").on("click", function() {
 				$('#error1').html(message.responseText)
 				$('#error').show();
 				$("#error").delay(8000).fadeOut("slow");
-				$('#UsernameError').html(message.responseJSON.userName);
+				$('#UsernameError').html(message.responseJSON.username);
 				$('#PasswordError').html(message.responseJSON.password);
 			}
 		});
@@ -233,6 +220,20 @@ function resetAllFiled() {
 	$('#areaPincode').val('');
 	$('#username').val('');
 	$('#password').val('');
+}
+
+function restAllError() {
+	$('#FirstnameError').html("");
+	$('#LastnameError').html("");
+	$('#EmailError').html("");
+	$('#PhoneError').html("");
+	$('#BirthError').html("");
+	$('#AddressError').html("");
+	$('#Address2Error').html("");
+	$('#CityError').html("");
+	$('#AreaPincodeError').html("");
+	$('#UsernameError').html("");
+	$('#PasswordError').html("");
 }
 
 function handleChange(checkbox) {

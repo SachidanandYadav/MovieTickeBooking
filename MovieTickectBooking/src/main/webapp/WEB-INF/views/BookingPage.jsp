@@ -55,12 +55,14 @@
 									<option value="${seatType.seatType_id}">${seatType.seatName}</option>
 								</c:forEach>
 							</select>
+							<span id="SeatTypeError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="totalSeat" class="col-sm-3 col-form-label">Seat Available</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" id="totalSeat" placeholder="Total Seat" disabled="disabled">
+							
 						</div>
 					</div>
 					<div class="form-group row">
@@ -73,6 +75,7 @@
 						<label for="address" class="col-sm-3 col-form-label">Enter Total Seat</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" id="seat" placeholder="Total Seat" onkeyup="totalPrice()" required="required">
+							<span id="SeatError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -84,7 +87,7 @@
 					</div>
 						<div class="modal-footer">
 							<a href="/MovieTickectBooking/show-detail-page"><button type="button" class="btn btn-danger">Back</button></a>
-							<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  onclick="payment()">Payment</button>
+							<button type="submit" class="btn btn-primary" onclick="payment()">Payment</button>
 						</div>
 				</div>
 				
@@ -113,16 +116,17 @@
 					<div class="form-group row">
 						<label for="city" class="col-sm-3 col-form-label">Payment Method</label>
 						<div class="col-sm-8">
-							<select id="paymentMentod" class="form-control" onchange="totalSeat()" required="required" >
+							<select id="PaymentMethod" class="form-control" onchange="totalSeat()" required="required" >
 								<option  selected disabled value="">Chose Option</option>
 							</select>
+							<span id="PaymentMethodError" class="error"></span>
 						</div>
 					</div>
 					</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal" id="pay">PAY</button>
+							<button type="button" class="btn btn-primary"  id="pay">PAY</button>
 						</div>
 				</div>
 			</div>

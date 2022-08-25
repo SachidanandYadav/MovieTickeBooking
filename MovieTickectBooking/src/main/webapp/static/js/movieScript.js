@@ -52,6 +52,32 @@ function editData(id) {
 }
 
 
+function check(filed, message) {
+	if (filed == "" || filed == null) {
+		$("#" + message + "Error").html(message + " Filed is Required");
+		$("#" + message + "Error").show();
+		flag = false;
+	} else {
+		$("#" + message + "Error").hide();
+		flag = true;
+	}
+	return flag;
+}
+
+function alphaPattern(field,message) {
+	var alphaRegex = new RegExp('^[a-zA-Z]+$');
+	if (!alphaRegex.test(field)) {
+		$("#" + message + "Error").html(message + " Filed is Required Only Alphabets");
+		$("#" + message + "Error").show();
+		flag = false;
+	} else {
+		$("#" + message + "Error").hide();
+		flag = true;
+	}
+	return flag;
+}
+
+
 
 
 $("#Movie").on("click", function() {
@@ -65,6 +91,19 @@ $("#Movie").on("click", function() {
 	movie.genre = $('#genre').val();
 	movie.countryName = $('#country').val();
 	movie.imageUrl = $('#imageUrl').val();
+	
+
+	var Title = check(movie.title, "Title");
+	var Description = check(movie.description, "Description");
+	var Duration = check(movie.duration, "Duration");
+	var Language = check(movie.language, "Language");
+	var Release = check(movie.releaseDate, "ReleaseDate");
+	var Genre = check(movie.genre, "Genre");
+	var Country = check(movie.countryName, "Country");
+	var Image = check(movie.imageUrl, "ImageUrl");
+	
+	
+	if(Title && Description && Duration && Language && Release && Genre && Country && Image){	
 	$.ajax({
 		url: "http://192.168.20.204:8080/MovieTickectBooking/movie",
 		type: "POST",
@@ -85,6 +124,7 @@ $("#Movie").on("click", function() {
 			$("#error").delay(8000).fadeOut("slow");
 		}
 	});
+	}
 });
 	
 	
@@ -125,6 +165,17 @@ function resetAllFiled(){
 	$('#country').val('');
 	$('#imageUrl').val('');
 	
+}
+
+function restAllError(){
+	$('#TitleError').html("");
+	$('#DescriptionError').html("");
+	$('#DurationError').html("");
+	$('#LanguageError').html("");
+	$('#ReleaseDateError').html("");
+	$('#GenreError').html("");
+	$('#CountryError').html("");
+	$('#ImageUrlError').html("");
 }
 
 

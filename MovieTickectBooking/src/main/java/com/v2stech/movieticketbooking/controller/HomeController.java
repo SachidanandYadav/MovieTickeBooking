@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
 import com.v2stech.movieticketbooking.exception.InvalidFiledException;
+import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
 import com.v2stech.movieticketbooking.model.CityDTO;
@@ -137,9 +138,10 @@ public class HomeController {
 	}
 
 	@PostMapping("/booking-detail")
-	public void setBookingDetail(@RequestBody BookedTicketDTO bookedTicket) {
+	public void setBookingDetail(@RequestBody BookedTicketDTO bookedTicket) throws InvalidSeatException {
 		bookingService.setBookingDetails(bookedTicket);
 	}
+	
 
 	@RequestMapping("/booking-history")
 	public ModelAndView getBookingHistoryPage(Model model) {

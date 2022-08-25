@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	/* getBookingHistory();*/
+
 });
 
 
@@ -66,6 +66,30 @@ function movieShow(id) {
 	});
 }
 
+function check(filed, message) {
+	if (filed == "" || filed == null) {
+		$("#" + message + "Error").html(message + " Filed is Required");
+		$("#" + message + "Error").show();
+		flag = false;
+	} else {
+		$("#" + message + "Error").hide();
+		flag = true;
+	}
+	return flag;
+}
+
+function seatValid(filed) {
+	if (filed < 0) {
+		$("#SeatError").html("Seat Not Available");
+		$("#SeatError").show();
+		flag = false;
+	} else {
+		$("#SeatError").hide();
+		flag = true;
+	}
+	return flag;
+}
+
 
 function totalSeat() {
 	var seatTypeId = $('#seatType').val();
@@ -90,38 +114,82 @@ function totalSeat() {
 
 function totalPrice() {
 	var totalSeat = $('#seat').val();
-	var seatPrice = $('#seatPrice').val();
+	var seatPrice = $('#seatPrice').val();		
 	var totalAmount = (totalSeat * seatPrice);
 	$('#totalAmount').val(totalAmount);
-
 }
 
 
 function payment() {
-	var finalPrice = $('#totalAmount').val();
-	$("#pay").on("click", function() {
-		var booking = {}
-		booking.userName = $('#userName').val();
-		booking.seat = $('#seat').val();
-		booking.amount = $('#finalAmount').val();
-		booking.methodId = $('#paymentMentod').val();
-		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/booking-detail",
-			type: "POST",
-			contentType: 'application/json',
-			data: JSON.stringify(booking),
-			success: function() {
-				$('#userName').val('');
-				$('#seat').val('');
-				$('#totalAmount').val('');
-				$('#paymentMentod').val('');
-				$('#seatType').val('');
-				$('#totalSeat').val('');
-				$('#seatPrice').val('');
-				$('#finalAmount').val('');
 
-				$('#addSuccess').show();
-				$("#addSuccess").delay(8000).fadeOut("slow");
+	var finalPrice = $('#totalAmount').val();
+	var totalSeat = $('#seat').val();
+	var seatTypeId = $('#seatType').val();
+	var availableSeat = $('#totalSeat').val();
+	var validSeat = (availableSeat - totalSeat);
+	
+	
+
+	var SeatType = check(seatTypeId, "SeatType");
+	var TotalSeat = check(totalSeat, "Seat");
+	if(TotalSeat){		
+	var seat = seatValid(validSeat);
+	}
+
+	if (TotalSeat && SeatType && seat) {
+		$("#exampleModal").modal('show');
+		$("#PaymentMethodError").html("");
+		$("#pay").on("click", function() {
+			var booking = {}
+			booking.userName = $('#userName').val();
+			booking.seat = $('#seat').val();
+			booking.amount = $('#finalAmount').val();
+			booking.methodId = $('#PaymentMethod').val();
+			var PaymentType = check(booking.methodId, "PaymentMethod");
+			if (PaymentType) {
+				$.ajax({
+					url: "http://192.168.20.204:8080/MovieTickectBooking/booking-detail",
+					type: "POST",
+					contentType: 'application/json',
+					data: JSON.stringify(booking),
+					success: function() {
+						$('#userName').val('');
+						$('#seat').val('');
+						$('#totalAmount').val('');
+						$('#PaymentMethod').val('');
+						$('#seatType').val('');
+						$('#totalSeat').val('');
+						$('#seatPrice').val('');
+						$('#finalAmount').val('');
+
+						$('#addSuccess').show();
+						$("#addSuccess").delay(8000).fadeOut("slow");
+					},
+					failure: function() {
+						$('#failure').show();
+						$("#failure").delay(8000).fadeOut("slow");
+					},
+					error: function(message) {
+						$('#SeatError').html(message.responseText);
+						$('#SeatError').show();
+					}
+				});
+			}
+		});
+
+
+
+
+		$.ajax({
+			url: "http://192.168.20.204:8080/MovieTickectBooking/payment-method",
+			type: "GET",
+			success: function(response) {
+				$('#finalAmount').val(finalPrice);
+				$("#PaymentMethod").html("");
+				$("#PaymentMethod").append("<option selected disabled>Choose Option</option>")
+				for (res in response) {
+					$("#PaymentMethod").append("<option value=" + response[res].methodId + ">" + response[res].methodType + "</option>")
+				}
 			},
 			failure: function() {
 				$('#failure').show();
@@ -132,29 +200,10 @@ function payment() {
 				$("#error").delay(8000).fadeOut("slow");
 			}
 		});
-	});
 
-	$.ajax({
-		url: "http://192.168.20.204:8080/MovieTickectBooking/payment-method",
-		type: "GET",
-		success: function(response) {
-			$('#finalAmount').val(finalPrice);
-			$("#paymentMentod").html("");
-			$("#paymentMentod").append("<option selected disabled>Choose Option</option>")
-			for (res in response) {
-				$("#paymentMentod").append("<option value=" + response[res].methodId + ">" + response[res].methodType + "</option>")
-			}
-		},
-		failure: function() {
-			$('#failure').show();
-			$("#failure").delay(8000).fadeOut("slow");
-		},
-		error: function() {
-			$('#error').show();
-			$("#error").delay(8000).fadeOut("slow");
-		}
-	});
+	}
 }
+
 
 
 function getBookingHistory() {
@@ -262,12 +311,3 @@ function updateCustomer() {
 		}
 	});
 }
-
-
-
-
-
-
-
-
-

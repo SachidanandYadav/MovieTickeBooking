@@ -285,7 +285,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	@Override
 	public void setBookingDetail(BookedTicketDTO bookedTicket,int showId,int totalSeat) {
 		jdbcTemplate.update(
-				"INSERT INTO booking (seat, user_id, show_id)VALUES(?,(select user_id from user_credentials where user_name=?),?)",bookedTicket.getSeat(),bookedTicket.getUser_name(),showId);
+				"INSERT INTO booking (seat, user_id, show_id)VALUES(?,(select user_id from user_credentials where user_name=?),?)",bookedTicket.getSeat(),bookedTicket.getUserName(),showId);
 
 		jdbcTemplate.update(
 				"INSERT INTO payment (Amount, booking_id, methodId) VALUES(?,(select booking_id from booking order by booking_id desc limit 1),?)",bookedTicket.getAmount(),bookedTicket.getMethodId());
@@ -312,7 +312,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 
 	@Override
 	public void getUpdateCustomer(CustomerDTO customer) {
-		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",customer.getEmail(),customer.getPhone(),customer.getFirstName(),customer.getLastName(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCityId(),customer.getCustomerId());
+		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",  customer.getEmail(),customer.getPhone(),customer.getFirstName(),customer.getLastName(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCityId(),customer.getCustomerId());
 	}
 
 	

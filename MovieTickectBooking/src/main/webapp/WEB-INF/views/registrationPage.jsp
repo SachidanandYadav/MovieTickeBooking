@@ -119,7 +119,8 @@
 						<button type="submit" class="btn btn-primary" id="addCustomer">Sign in</button>
 					</div>
 					<div class="form-group col-sm-3">
-						<button type="button" class="btn btn-danger">Back</button>
+					<a href="/MovieTickectBooking/login-page"><button type="button" class="btn btn-danger">Back</button></a>
+					
 					</div>
 				</div>
 

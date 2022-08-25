@@ -13,11 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style type="text/css">
-.hr-primary{
-border: 2px solid lightgray;
-}
-</style>
+     <link rel="stylesheet" href="<c:url value="/static/css/AdminCss.css" />" />
 </head>
 <body>
   <%@include file="adminHeaderPage.jsp"%>
@@ -98,36 +94,42 @@ border: 2px solid lightgray;
 						<label for="title" class="col-sm-3 col-form-label">Title</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="title" placeholder="Title" name="title">
+							<span id="TitleError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="description" class="col-sm-3 col-form-label">Description</label>
 						<div class="col-sm-8">
 							<textarea class="form-control" id="description" placeholder="Description" name="description"></textarea>
+							<span id="DescriptionError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="duration" class="col-sm-3 col-form-label">Duration</label>
 						<div class="col-sm-8">
 							<input type="time" class="form-control" id="duration" placeholder="Duration" name="Duration">
+							<span id="DurationError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="language" class="col-sm-3 col-form-label">Language</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="language" placeholder="Language" name="language">
+							<span id="LanguageError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="releaseDate" class="col-sm-3 col-form-label">Release Date</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="releaseDate" placeholder="Language" name="releaseDate">
+							<input type="date" class="form-control" id="releaseDate" placeholder="Date" name="releaseDate">
+							<span id="ReleaseDateError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="genre" class="col-sm-3 col-form-label">Movie Genre</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="genre" placeholder="Gener" name="genre">
+							<span id="GenreError" class="error"></span>
 						</div>
 					</div>
 					
@@ -140,19 +142,21 @@ border: 2px solid lightgray;
 									<option value="${countryList.country_name}">${countryList.country_name}</option>
 								</c:forEach>
 							</select>
+							<span id="CountryError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="imageUrl" class="col-sm-3 col-form-label">Image URL</label>
 						<div class="col-sm-8">
 							<textarea class="form-control" id="imageUrl" placeholder="Image Url" name="imageUrl"></textarea>
+							<span id="ImageUrlError" class="error"></span>
 						</div>
 					</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" data-dismiss="modal" class="btn btn-primary" id="Movie">Movie</button>
+							onclick="restAllError()" data-dismiss="modal">Close</button>
+							<button type="button"  class="btn btn-primary" id="Movie">Movie</button>
 						</div>
 					</div>
 				</div>

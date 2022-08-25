@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.hr-primary{
+border: 2px solid lightgray;
+}
+
+.error{
+	color:red;
+	font-family: auto;
+    font-size: 15px;
+}

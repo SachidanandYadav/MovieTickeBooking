@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.v2stech.movieticketbooking.dao.MovieTickectBookingDAO;
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
+import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
@@ -61,7 +62,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 				if (!admin.isEmpty()) {
 					viewNameString = "admin-dashboard-page";
 				} else {
-					throw new InvalidCredentialException("Input Filed are empty");
+					throw new InvalidCredentialException("Invalid Credential");
 				}
 
 		} else if (credentials.getIsAdmin() == 0) {
@@ -271,12 +272,17 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public void setBookingDetails(BookedTicketDTO bookedTicket) {
+	public void setBookingDetails(BookedTicketDTO bookedTicket) throws InvalidSeatException {
 		int totalSeat=0;
 		totalSeat = singleSeats.getSeat()-bookedTicket.getSeat();
-		for(MovieShowDTO show : singleShow) {
-			movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShow_id(),totalSeat);
+		if(totalSeat < 0) {
+			throw new InvalidSeatException("Seat Not Available");
+		}else {
+			for(MovieShowDTO show : singleShow) {
+				movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShow_id(),totalSeat);
+			}
 		}
+		
 	}
 
 	@Override
