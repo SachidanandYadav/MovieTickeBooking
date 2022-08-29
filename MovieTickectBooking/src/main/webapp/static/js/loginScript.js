@@ -134,7 +134,7 @@ $("#addCustomer").on("click", function() {
 	if (firstname && lastname && email && phone && birth && addressLine1 && addressLine2 && cityName && areaPincode && username && password && firstnamePattern && lastnamePattern && phonePattern && passwordPattern && areaPincodePattren && EmailPattern && Phonelength && Pincodelength) {
 		restAllError();
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/customer",
+			url: "http://127.0.0.1:8080/MovieTickectBooking/customer",
 			type: "POST",
 			contentType: 'application/json',
 			data: JSON.stringify(customer),
@@ -189,7 +189,7 @@ $("#login").on("click", function() {
 		$('#userNameError').html("");
 		$('#passwordError').html("");
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/login-customer",
+			url: "http://127.0.0.1:8080/MovieTickectBooking/login-customer",
 			type: "POST",
 			contentType: 'application/json',
 			data: JSON.stringify(login),

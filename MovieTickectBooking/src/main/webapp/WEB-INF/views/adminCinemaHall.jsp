@@ -13,12 +13,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="<c:url value="/static/css/AdminCss.css" />" />
 
-<style type="text/css">
-.hr-primary{
-border: 2px solid lightgray;
-}
-</style>
 </head>
 <body>
 <%@include file="adminHeaderPage.jsp"%>
@@ -100,18 +96,21 @@ border: 2px solid lightgray;
 						<label for="hallName" class="col-sm-3 col-form-label">Hall Name</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="hallName" placeholder="Hall Name">
+							<span id="HallNameError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="totalSeat" class="col-sm-3 col-form-label">Total Seat</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" id="totalSeat" placeholder="Total Seat">
+							<span id="TotalSeatError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="address" class="col-sm-3 col-form-label">Address</label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="address" placeholder="Address">
+							<span id="AddressError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -123,6 +122,7 @@ border: 2px solid lightgray;
 									<option value="${stateList.state_id}">${stateList.state_name}</option>
 								</c:forEach>
 							</select>
+							<span id="StateNameError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -130,13 +130,14 @@ border: 2px solid lightgray;
 						<div class="col-sm-8">
 							<select id="city" class="form-control" onchange="" >
 							</select>
+							<span id="CityNameError" class="error"></span>
 						</div>
 					</div>
 					</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal" id="CinemaHall">Cinema Hall</button>
+							onclick="restAllError()" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary"  id="CinemaHall">Cinema Hall</button>
 						</div>
 				</div>
 			</div>

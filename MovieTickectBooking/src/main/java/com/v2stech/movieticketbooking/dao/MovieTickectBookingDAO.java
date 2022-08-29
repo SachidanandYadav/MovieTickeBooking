@@ -101,7 +101,11 @@ public interface MovieTickectBookingDAO {
 	
 	CustomerDTO getUserProfile(String userName);
 	
-	void getUpdateCustomer(CustomerDTO customer);
+	void getUpdateCustomer(CustomerDTO customer,int id);
+
+	List<BookedTicketDTO> getAllPayment();
+	
+	void deletePaymentById(int id);
 	
 	
 	

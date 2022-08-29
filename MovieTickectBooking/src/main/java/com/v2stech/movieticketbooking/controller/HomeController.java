@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
-import com.v2stech.movieticketbooking.exception.InvalidFiledException;
+import com.v2stech.movieticketbooking.exception.BindingResultException;
 import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.model.CinemaSeatDTO;
@@ -28,6 +28,10 @@ import com.v2stech.movieticketbooking.model.PaymentMethodDTO;
 import com.v2stech.movieticketbooking.model.UserCredentialsDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
+/**
+ * @author v2stech
+ *
+ */
 /**
  * @author v2stech
  *
@@ -45,11 +49,18 @@ public class HomeController {
 
 	private List<MovieShowDTO> movieShowDetail;
 
+	/**
+	 * @return
+	 */
 	@RequestMapping("/login-page")
 	public ModelAndView getLoginPage() {
 		return new ModelAndView("login");
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/register-page")
 	public ModelAndView getRegisterPage(Model model) {
 		List<CityDTO> list = bookingService.getCityDatas();
@@ -57,20 +68,32 @@ public class HomeController {
 		return new ModelAndView("registrationPage");
 	}
 
+	/**
+	 * @param customer
+	 * @param result
+	 * @throws BindingResultException
+	 */
 	@PostMapping("/customer")
-	public void saveCustomer(@Valid @RequestBody CustomerDTO customer, BindingResult result) throws InvalidFiledException {
+	public void saveCustomer(@Valid @RequestBody CustomerDTO customer, BindingResult result) throws BindingResultException {
 		if (result.hasErrors()) {
-			throw new InvalidFiledException(result);
+			throw new BindingResultException(result);
 		} else {
 			bookingService.saveCustomerData(customer);
 		}
 	}
 
+	/**
+	 * @param user
+	 * @param result
+	 * @return
+	 * @throws InvalidCredentialException
+	 * @throws BindingResultException
+	 */
 	@PostMapping("/login-customer")
 	public String loginCustomer(@Valid @RequestBody UserCredentialsDTO user, BindingResult result)
-			throws InvalidCredentialException, InvalidFiledException {
+			throws InvalidCredentialException, BindingResultException {
 		if (result.hasErrors()) {
-			throw new InvalidFiledException(result);
+			throw new BindingResultException(result);
 		} else {
 			userName = user.getUserName();
 			return bookingService.getUserCredentials(user);
@@ -78,6 +101,10 @@ public class HomeController {
 
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/dashboard-page")
 	public ModelAndView getDashboardPage(Model model) {
 		List<MovieDTO> movie = bookingService.getMovieDetails();
@@ -86,18 +113,31 @@ public class HomeController {
 		return new ModelAndView("DashboardPage");
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/admin-dashboard-page")
 	public ModelAndView getAdminDashboardPage(Model model) {
 		model.addAttribute("username", userName);
 		return new ModelAndView("adminDashboardPage");
 	}
 
+	/**
+	 * @param movieName
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/movie-details/{movieName}")
 	public String getFullDetails(@PathVariable String movieName, Model model) {
 		singleMovieDetail = bookingService.getMovieSingleDetail(movieName);
 		return "movie-detail-page";
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/movie-detail-page")
 	public ModelAndView getMovieDetailPage(Model model) {
 		model.addAttribute("username", userName);
@@ -106,12 +146,22 @@ public class HomeController {
 		return new ModelAndView("movieDetails");
 	}
 
+	/**
+	 * @param hallId
+	 * @param title
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/movie-show-detail/{hallId}/{title}")
 	public String getMovieShowById(@PathVariable int hallId, @PathVariable String title, Model model) {
 		movieShowDetail = bookingService.getMovieShowByHall(hallId, title);
 		return "show-detail-page";
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/show-detail-page")
 	public ModelAndView getMovieShowPage(Model model) {
 		model.addAttribute("username", userName);
@@ -119,6 +169,10 @@ public class HomeController {
 		return new ModelAndView("ShowDetails");
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/show-booking-page")
 	public ModelAndView getBookingPage(Model model) {
 		model.addAttribute("username", userName);
@@ -127,38 +181,64 @@ public class HomeController {
 		return new ModelAndView("BookingPage");
 	}
 
+	/**
+	 * @param seatType
+	 * @return
+	 */
 	@GetMapping("/total-seat/{seatType}")
 	public CinemaSeatDTO getTotalSeat(@PathVariable int seatType) {
 		return bookingService.getTotalSeats(seatType);
 	}
 
+	/**
+	 * @return
+	 */
 	@GetMapping("/payment-method")
 	public List<PaymentMethodDTO> getPayment() {
 		return bookingService.getPaymentMethods();
 	}
 
+	/**
+	 * @param bookedTicket
+	 * @throws InvalidSeatException
+	 */
 	@PostMapping("/booking-detail")
 	public void setBookingDetail(@RequestBody BookedTicketDTO bookedTicket) throws InvalidSeatException {
 		bookingService.setBookingDetails(bookedTicket);
 	}
 	
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/booking-history")
 	public ModelAndView getBookingHistoryPage(Model model) {
 		model.addAttribute("username", userName);
 		return new ModelAndView("BookingHistory");
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping("/booking-history-list")
 	public List<BookedTicketDTO> getBookingHistoryList() {
 		return bookingService.getBookingHistoryLists(userName);
 	}
 
+	/**
+	 * @param bookingId
+	 * @return
+	 */
 	@RequestMapping("/payment-detail/{bookingId}")
 	public BookedTicketDTO getPaymentDetail(@PathVariable int bookingId) {
 		return bookingService.getPaymentDetails(bookingId);
 	}
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/profile")
 	public ModelAndView getProfilePage(Model model) {
 		model.addAttribute("cityList", bookingService.getCityDatas());
@@ -166,14 +246,21 @@ public class HomeController {
 		return new ModelAndView("userProfile");
 	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping("/user-profile")
 	public CustomerDTO getUserProfile() {
 		return bookingService.getUserProfiles(userName);
 	}
 
-	@RequestMapping("/update-customer")
-	public void getUpdateCustomer(@RequestBody CustomerDTO customer) {
-		bookingService.getUpdateCustomers(customer);
+	/**
+	 * @param customer
+	 * @param id
+	 */
+	@RequestMapping("/update-customer/{id}")
+	public void getUpdateCustomer(@RequestBody CustomerDTO customer,@PathVariable int id) {
+		bookingService.getUpdateCustomers(customer,id);
 	}
 
 }

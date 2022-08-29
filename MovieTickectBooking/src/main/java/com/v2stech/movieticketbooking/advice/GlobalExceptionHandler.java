@@ -10,22 +10,23 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.v2stech.movieticketbooking.exception.BindingResultException;
+import com.v2stech.movieticketbooking.exception.ErrorDetail;
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
-import com.v2stech.movieticketbooking.exception.InvalidFiledException;
 import com.v2stech.movieticketbooking.exception.InvalidSeatException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(InvalidFiledException.class)
-	public ResponseEntity<Map<String, String>> getInvalidFiledException(InvalidFiledException ex) {
+	@ExceptionHandler(BindingResultException.class)
+	public ResponseEntity<Map<String, String>> getInvalidFiledException(BindingResultException ex) {
 		Map<String, String> errorMessage = new HashMap<>();
 		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
 			String filedName = ((FieldError) error).getField();
 			String message = error.getDefaultMessage();
 			errorMessage.put(filedName, message);
 		}
-		return new ResponseEntity<Map<String, String>>(errorMessage, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Map<String, String>>(errorMessage, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(InvalidCredentialException.class)
@@ -36,6 +37,12 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(InvalidSeatException.class)
 	public ResponseEntity<String> getInvalidSeatException(InvalidSeatException exception){
 		return new ResponseEntity<String>(exception.getMessage(),HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<?> globalException(Exception exception) {
+		ErrorDetail errorDetail = new ErrorDetail(exception.getMessage());
+		return new ResponseEntity<>(errorDetail, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	

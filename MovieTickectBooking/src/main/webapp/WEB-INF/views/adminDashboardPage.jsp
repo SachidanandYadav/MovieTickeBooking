@@ -42,9 +42,10 @@ text-decoration: none !important;
   <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/movie-show">Movie Show</a></div>
 </div>
 <div class="row">
-  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/show-seat">Show Seat</a></div>
+  <!-- <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/show-seat">Show Seat</a></div> -->
   <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/cinema-hall">Cinema Hall</a></div>
   <div class="col-8 col-md-3"><a class="link" href="/MovieTickectBooking/cinema-seat">Cinema Seat</a></div>
+  <div class="col-8 col-md-3 "><a class="link" href="/MovieTickectBooking/payment-page">Ticket Payment</a></div>
 </div>
 	</div>
 	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>

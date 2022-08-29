@@ -1,28 +1,31 @@
 package com.v2stech.movieticketbooking.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
 @Data
-@JsonIgnoreType
 public class CinemaHallDTO {
 
-	@JsonProperty(value = "hallId")
-	private int hall_id;
-	@JsonProperty(value = "hallName")
-	private String hall_name;
-	@JsonProperty(value = "totalSeat")
-	private int total_seat;
+	private int hallId;
+	@NotEmpty(message = "Titles Can not be empty")
+	@Size(min = 3,max = 15)
+	private String hallName;
+	@NotNull(message = "Total Seat Can not be empty")
+	private Integer totalSeat;
+	@NotEmpty(message = "Address Can not be empty")
+	@Size(min = 3,max = 15)
 	private String address;
-	@JsonProperty(value = "cityId")
-	private int city_id;
+	private int cityId;
 	@JsonProperty(value = "stateId")
-	private int state_id;
-	@JsonProperty(value = "cityName")
-	private String city_name;
-	@JsonProperty(value = "stateName")
-	private String state_name;
-	
+	private Integer state_id;
+	@NotEmpty(message = "City Name Can not be empty")
+	private String cityName;
+	@NotNull(message = "State Name Can not be empty")
+	private String stateName;
+
 }

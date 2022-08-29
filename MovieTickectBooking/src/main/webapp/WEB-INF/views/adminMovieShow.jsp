@@ -13,12 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<style type="text/css">
-.hr-primary{
-border: 2px solid lightgray;
-}
-</style>
+<link rel="stylesheet" href="<c:url value="/static/css/AdminCss.css" />" />
 </head>
 <body>
 <%@include file="adminHeaderPage.jsp"%>
@@ -98,30 +93,34 @@ border: 2px solid lightgray;
 						<div class="form-group row">
 						<label for="showdata" class="col-sm-3 col-form-label">Show Date</label>
 						<div class="col-sm-8">
-							<input type="date" class="form-control" id="showdata" placeholder="" name="title">
+							<input type="date" class="form-control" id="showdate" placeholder="" name="title">
+							<span id="ShowdateError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="startTime" class="col-sm-3 col-form-label">Start Time</label>
 						<div class="col-sm-8">
 							<input type="time" class="form-control" id="startTime" placeholder="Star Time" name="Duration">
+							<span id="StartTimeError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="endTime" class="col-sm-3 col-form-label">End Time</label>
 						<div class="col-sm-8">
 							<input type="time" class="form-control" id="endTime" placeholder="End Time" name="Duration">
+							<span id="EndTimeError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="city" class="col-sm-3 col-form-label">City</label>
 						<div class="col-sm-8">
 							<select id="cityid" class="form-control" onchange="selectCityOption()" >
-								<option selected disabled>Choose...</option>
+								
 								<c:forEach items="${cityList}" var="cityList">
-									<option value="${cityList.city_id}">${cityList.city_name}</option>
+									<option  value="${cityList.city_id}">${cityList.city_name}</option>
 								</c:forEach>
 							</select>
+							<span id="CityError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -129,6 +128,7 @@ border: 2px solid lightgray;
 						<div class="col-sm-8">
 							<select id="hallname"class="form-control" >
 							</select>
+							<span id="HallnameError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -139,13 +139,14 @@ border: 2px solid lightgray;
 									<option value="${movieList.title}">${movieList.title}</option>
 								</c:forEach>
 							</select>
+							<span id="MovieError" class="error"></span>
 						</div>
 					</div>
 					</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal" onclick="reload()">Close</button>
-							<button type="button"  class="btn btn-primary" data-dismiss="modal" id="MovieShow" >Movie Show</button>
+							<button type="button"  class="btn btn-primary" id="MovieShow" >Movie Show</button>
 						</div>
 					</div>
 				</div>

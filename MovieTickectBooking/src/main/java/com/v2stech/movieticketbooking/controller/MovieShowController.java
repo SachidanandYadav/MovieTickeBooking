@@ -2,8 +2,11 @@ package com.v2stech.movieticketbooking.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.v2stech.movieticketbooking.exception.BindingResultException;
 import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.MovieShowDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
@@ -47,8 +51,12 @@ public class MovieShowController {
 	}
 	
 	@PostMapping("/movie-show")
-	public void movieShow(@RequestBody MovieShowDTO movieShow) {
-		bookingService.movieShow(movieShow);
+	public void movieShow(@Valid @RequestBody MovieShowDTO movieShow, BindingResult result) throws BindingResultException {
+		if(result.hasErrors()) {
+			throw new BindingResultException(result);
+		}else {			
+			bookingService.movieShow(movieShow);
+		}
 	}
 
 

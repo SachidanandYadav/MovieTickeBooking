@@ -49,8 +49,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 
 	@Override
 	public MovieShowDTO getMovieShowByIds(int id) {
-		return jdbcTemplate.queryForObject("SELECT show_id,show_date,startTime,endTime,hall_name,title "
-				+ "FROM movie_show INNER JOIN cinema_hall USING (hall_id) INNER JOIN movie USING (movie_id) where show_id=?",
+		return jdbcTemplate.queryForObject("SELECT show_id,show_date,startTime,endTime,hall_name,title,city_name FROM movie_show INNER JOIN cinema_hall USING (hall_id) INNER JOIN movie USING (movie_id) INNER JOIN city USING (city_id) where show_id=?",
 				new BeanPropertyRowMapper<MovieShowDTO>(MovieShowDTO.class), id);
 	}
 
@@ -58,7 +57,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void addMovieShow(MovieShowDTO movieShow) {
 		jdbcTemplate.update(
 				"INSERT INTO movie_show(show_date,startTime,endTime,hall_id,movie_id) VALUES(?,?,?,(select hall_id from cinema_hall where hall_name=?),(select movie_id from movie where title=?))",
-				movieShow.getShow_date(), movieShow.getStartTime(), movieShow.getEndTime(), movieShow.getHall_name(),
+				movieShow.getShowDate(), movieShow.getStartTime(), movieShow.getEndTime(), movieShow.getHallName(),
 				movieShow.getTitle());
 	}
 
@@ -66,8 +65,8 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void updateMovieShows(MovieShowDTO movieShow) {
 		jdbcTemplate.update(
 				"UPDATE movie_show SET show_date=?,startTime=?,endTime=?,hall_id=(select hall_id from cinema_hall where hall_name=?),movie_id=(select movie_id from movie where title=?) WHERE show_id=?",
-				movieShow.getShow_date(), movieShow.getStartTime(), movieShow.getEndTime(), movieShow.getHall_name(),
-				movieShow.getTitle(), movieShow.getShow_id());
+				movieShow.getShowDate(), movieShow.getStartTime(), movieShow.getEndTime(), movieShow.getHallName(),
+				movieShow.getTitle(), movieShow.getShowId());
 
 	}
 
@@ -106,16 +105,16 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void addCinemaHall(CinemaHallDTO cinemaHall) {
 		jdbcTemplate.update(
 				"INSERT INTO cinema_hall(hall_name,total_seat,address,city_id,state_id) VALUES(?,?,?,(select city_id from city where city_name=?),?)",
-				cinemaHall.getHall_name(), cinemaHall.getTotal_seat(), cinemaHall.getAddress(),
-				cinemaHall.getCity_name(), cinemaHall.getState_id());
+				cinemaHall.getHallName(), cinemaHall.getTotalSeat(), cinemaHall.getAddress(),
+				cinemaHall.getCityName(), cinemaHall.getState_id());
 	}
 
 	@Override
 	public void updateCinemaHall(CinemaHallDTO cinemaHall) {
 		jdbcTemplate.update(
-				"UPDATE cinema_hall SET hall_name=?,total_seat=?,address=?,city_id=(select city_id from city where city_name=?),state_id=(select state_id from state where state_name=?) where hall_id=?",
-				cinemaHall.getHall_name(), cinemaHall.getTotal_seat(), cinemaHall.getAddress(),
-				cinemaHall.getCity_name(), cinemaHall.getState_name(), cinemaHall.getHall_id());
+				"UPDATE cinema_hall SET hall_name=?,total_seat=?,address=?,city_id=(select city_id from city where city_name=?),state_id=? where hall_id=?",
+				cinemaHall.getHallName(), cinemaHall.getTotalSeat(), cinemaHall.getAddress(),
+				cinemaHall.getCityName(), cinemaHall.getState_id(), cinemaHall.getHallId());
 	}
 
 	@Override
@@ -129,7 +128,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 		jdbcTemplate.update(
 				"INSERT INTO movie(title,description,duration,language,releaseDate,genre,country_id,imageUrl) VALUES(?,?,?,?,?,?,(select country_id from country where country_name=?),?)",
 				movie.getTitle(), movie.getDescription(), movie.getDuration(), movie.getLanguage(),
-				movie.getReleaseDate(), movie.getGenre(), movie.getCountry_name(), movie.getImageUrl());
+				movie.getReleaseDate(), movie.getGenre(), movie.getCountryName(), movie.getImageUrl());
 	}
 
 	@Override
@@ -137,8 +136,8 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 		jdbcTemplate.update(
 				"UPDATE movie SET title=?,description=?,duration=?,language=?,releaseDate=?,genre=?,country_id=(select country_id from country where country_name=?),imageUrl=? WHERE movie_id=?;",
 				movie.getTitle(), movie.getDescription(), movie.getDuration(), movie.getLanguage(),
-				movie.getReleaseDate(), movie.getGenre(), movie.getCountry_name(), movie.getImageUrl(),
-				movie.getMovie_id());
+				movie.getReleaseDate(), movie.getGenre(), movie.getCountryName(), movie.getImageUrl(),
+				movie.getMovieId());
 	}
 
 	@Override
@@ -164,7 +163,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void addCinemaSeat(CinemaSeatDTO cinemaSeat) {
 		jdbcTemplate.update(
 				"INSERT INTO cinema_seat(seat,hall_id,seatType_id) VALUES(?,(select hall_id from cinema_hall where hall_name=?),?)",
-				cinemaSeat.getSeat(), cinemaSeat.getHall_name(), cinemaSeat.getSeatType_id());
+				cinemaSeat.getSeat(), cinemaSeat.getHallName(), cinemaSeat.getSeatType_id());
 
 	}
 
@@ -172,7 +171,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void updateCinemaSeat(CinemaSeatDTO cinemaSeat) {
 		jdbcTemplate.update(
 				"UPDATE cinema_seat SET seat=?,hall_id=(select hall_id from cinema_hall where hall_name=?),seatType_id=? where cinemaSeat_id=? ",
-				cinemaSeat.getSeat(), cinemaSeat.getHall_name(), cinemaSeat.getSeatType_id(),
+				cinemaSeat.getSeat(), cinemaSeat.getHallName(), cinemaSeat.getSeatType_id(),
 				cinemaSeat.getCinemaSeat_id());
 
 	}
@@ -254,13 +253,13 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public void saveCustomerDatas(CustomerDTO customer) {
 		jdbcTemplate.update(
 				"INSERT INTO customer(email,phone,first_name,last_name,birth,gender,addressLine1,addressLine2,areaPincode,city_id) VALUES(?,?,?,?,?,?,?,?,?,(select city_id from city where city_name=?))",
-				customer.getEmail(), customer.getPhone(), customer.getFirstName(), customer.getLastName(),
+				customer.getEmail(), customer.getPhone(), customer.getFirst_name(), customer.getLast_name(),
 				customer.getBirth(), customer.getGender(), customer.getAddressLine1(), customer.getAddressLine2(),
-				customer.getAreaPincode(), customer.getCityName());
+				customer.getAreaPincode(), customer.getCity_name());
 
 		jdbcTemplate.update(
 				"INSERT INTO user_credentials(user_name,password,customer_id) VALUES(?,?,(select customer_id from customer where email=?))",
-				customer.getUserName(), customer.getPassword(), customer.getEmail());
+				customer.getUser_name(), customer.getPassword(), customer.getEmail());
 	}
 
 	@Override
@@ -304,6 +303,11 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	public BookedTicketDTO getPaymentDetail(int bookingId) {
 		return jdbcTemplate.queryForObject("select amount,payment_time,methodType,paymentStatus_Type from payment inner join paymentMethod using(methodId) inner join payment_status using(paymentStatus_id ) where booking_id=?", new BeanPropertyRowMapper<BookedTicketDTO>(BookedTicketDTO.class),bookingId);
 	}
+	
+	@Override
+	public List<BookedTicketDTO> getAllPayment() {
+		return jdbcTemplate.query("select payment_id,amount,payment_time,methodType,paymentStatus_Type from payment inner join paymentMethod using(methodId) inner join payment_status using(paymentStatus_id )", new BeanPropertyRowMapper<BookedTicketDTO>(BookedTicketDTO.class));
+	}
 
 	@Override
 	public CustomerDTO getUserProfile(String userName) {
@@ -311,8 +315,14 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	}
 
 	@Override
-	public void getUpdateCustomer(CustomerDTO customer) {
-		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",  customer.getEmail(),customer.getPhone(),customer.getFirstName(),customer.getLastName(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCityId(),customer.getCustomerId());
+	public void getUpdateCustomer(CustomerDTO customer ,int id) {
+		jdbcTemplate.update("UPDATE customer SET email=?,phone=?,first_name=?,last_name=?,birth=?,addressLine1=?,addressLine2=?,areaPincode=?,city_id=? where customer_id= ?",  customer.getEmail(),customer.getPhone(),customer.getFirst_name(),customer.getLast_name(),customer.getBirth(),customer.getAddressLine1(),customer.getAddressLine2(),customer.getAreaPincode(),customer.getCity_id(),id);
+	}
+
+	@Override
+	public void deletePaymentById(int id) {
+		jdbcTemplate.update("DELETE from payment where payment_id=?",id);
+
 	}
 
 	

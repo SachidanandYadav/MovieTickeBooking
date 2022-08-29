@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getBookingData() {
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/booking-list",
+			url: "http://127.0.0.1:8080/MovieTickectBooking/booking-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -28,7 +28,7 @@ $(document).ready(function(){
 function deleteData(id) {
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-booking/" + id,
+			url: "http://127.0.0.1:8080/MovieTickectBooking/delete-booking/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");

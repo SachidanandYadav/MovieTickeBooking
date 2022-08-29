@@ -102,7 +102,11 @@ public interface MovieTicketBookingService {
 	 
 	 CustomerDTO getUserProfiles(String userName);
 	 
-	 void getUpdateCustomers(CustomerDTO customer);
+	 void getUpdateCustomers(CustomerDTO customer,int id);
+	 
+	 List<BookedTicketDTO> getAllPayments();
+	 
+	 void deletePayment(int id);
 	
 	
 	//int getTotalSeatPrice(int totalSeat);

@@ -124,6 +124,6 @@
 		
 		
 	</div>
-	<script type="text/javascript" src="<c:url value="/static/js/main.js" />"></script>
+	<script type="text/javascript" src="<c:url value="/static/js/paymentScript.js" />"></script>
 </body>
 </html>

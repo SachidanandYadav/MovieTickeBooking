@@ -101,7 +101,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 
 	@Override
 	public void movies(MovieDTO movie) {
-		if (movie.getMovie_id() == 0) {
+		if (movie.getMovieId() == 0) {
 			movieTickectBookingDAO.addMovie(movie);
 		} else {
 			movieTickectBookingDAO.updateMovie(movie);
@@ -150,7 +150,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 
 	@Override
 	public void movieShow(MovieShowDTO movieShow) {
-		if (movieShow.getShow_id() == 0) {
+		if (movieShow.getShowId() == 0) {
 			movieTickectBookingDAO.addMovieShow(movieShow);
 		} else {
 			movieTickectBookingDAO.updateMovieShows(movieShow);
@@ -186,7 +186,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 
 	@Override
 	public void cinemaHalls(CinemaHallDTO cinemaHall) {
-		if (cinemaHall.getHall_id() == 0) {
+		if (cinemaHall.getHallId() == 0) {
 			movieTickectBookingDAO.addCinemaHall(cinemaHall);
 		} else {
 			movieTickectBookingDAO.updateCinemaHall(cinemaHall);
@@ -279,7 +279,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 			throw new InvalidSeatException("Seat Not Available");
 		}else {
 			for(MovieShowDTO show : singleShow) {
-				movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShow_id(),totalSeat);
+				movieTickectBookingDAO.setBookingDetail(bookedTicket,show.getShowId(),totalSeat);
 			}
 		}
 		
@@ -301,11 +301,21 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public void getUpdateCustomers(CustomerDTO customer) {
-		movieTickectBookingDAO.getUpdateCustomer(customer);
+	public void getUpdateCustomers(CustomerDTO customer, int id) {
+		movieTickectBookingDAO.getUpdateCustomer(customer,id);
 		
 	}
+	
+	
+	@Override
+	public List<BookedTicketDTO> getAllPayments() {
+		return movieTickectBookingDAO.getAllPayment();
+	}
 
+	@Override
+	public void deletePayment(int id) {
+		movieTickectBookingDAO.deletePaymentById(id);
+	}
 	
 
 	

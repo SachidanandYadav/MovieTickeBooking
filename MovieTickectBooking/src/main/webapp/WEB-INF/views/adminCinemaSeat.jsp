@@ -13,12 +13,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<style type="text/css">
-.hr-primary{
-border: 2px solid lightgray;
-}
-</style>
+<link rel="stylesheet" href="<c:url value="/static/css/AdminCss.css" />" />
 </head>
 <body>
 <%@include file="adminHeaderPage.jsp"%>
@@ -104,6 +99,7 @@ border: 2px solid lightgray;
 									<option value="${cityList.city_id}">${cityList.city_name}</option>
 								</c:forEach>
 							</select>
+							<span id="CityIdError" class="error"></span>
 						</div>
 					</div>
 					
@@ -113,6 +109,7 @@ border: 2px solid lightgray;
 							<select id="hallName" class="form-control" >
 							
 							</select>
+							<span id="HallNameError" class="error"></span>
 						</div>
 					</div>
 					
@@ -124,6 +121,7 @@ border: 2px solid lightgray;
 									<option value="${seatType.seatType_id}">${seatType.seatName}</option>
 								</c:forEach>
 							</select>
+							<span id="SeatTypeError" class="error"></span>
 						</div>
 					</div>
 					
@@ -131,6 +129,7 @@ border: 2px solid lightgray;
 						<label for="totalSeat" class="col-sm-3 col-form-label">Total Seat</label>
 						<div class="col-sm-8">
 							<input type="number" class="form-control" id="totalSeat" placeholder="Total Seat">
+							<span id="TotalSeatError" class="error"></span>
 						</div>
 					</div>
 					
@@ -138,7 +137,7 @@ border: 2px solid lightgray;
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal" onclick="reload()">Close</button>
-							<button type="button" class="btn btn-primary" data-dismiss="modal" id="MovieSeat">Movie Seat</button>
+							<button type="button" class="btn btn-primary"  id="MovieSeat">Movie Seat</button>
 						</div>
 				</div>
 			</div>

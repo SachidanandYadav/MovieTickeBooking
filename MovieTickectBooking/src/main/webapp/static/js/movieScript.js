@@ -6,7 +6,7 @@ $(document).ready(function(){
 
 	function getAllData() {
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/movie-list",
+			url: "http://127.0.0.1:8080/MovieTickectBooking/movie-list",
 			type: "GET",
 			success: function(response) {
 				for (res in response) {
@@ -27,7 +27,7 @@ $(document).ready(function(){
 	
 function editData(id) {
 	$.ajax({
-		url: "http://192.168.20.204:8080/MovieTickectBooking/movie/" + id,
+		url: "http://127.0.0.1:8080/MovieTickectBooking/movie/" + id,
 		type: "GET",
 		success: function(res) {
 			$('#movieid').val(res.movieId);
@@ -64,19 +64,6 @@ function check(filed, message) {
 	return flag;
 }
 
-function alphaPattern(field,message) {
-	var alphaRegex = new RegExp('^[a-zA-Z]+$');
-	if (!alphaRegex.test(field)) {
-		$("#" + message + "Error").html(message + " Filed is Required Only Alphabets");
-		$("#" + message + "Error").show();
-		flag = false;
-	} else {
-		$("#" + message + "Error").hide();
-		flag = true;
-	}
-	return flag;
-}
-
 
 
 
@@ -103,13 +90,15 @@ $("#Movie").on("click", function() {
 	var Image = check(movie.imageUrl, "ImageUrl");
 	
 	
-	if(Title && Description && Duration && Language && Release && Genre && Country && Image){	
+	if(Title && Description && Duration && Language && Release && Genre && Country && Image){
+	restAllError();
 	$.ajax({
-		url: "http://192.168.20.204:8080/MovieTickectBooking/movie",
+		url: "http://127.0.0.1:8080/MovieTickectBooking/movie-detail",
 		type: "POST",
 		contentType: 'application/json',
 		data: JSON.stringify(movie),
 		success: function() {
+			$('.close').click();
 			$("#user-table").html("");
 			getAllData();
 			$('#addSuccess').show();
@@ -119,9 +108,24 @@ $("#Movie").on("click", function() {
 			$('#failure').show();
 			$("#failure").delay(8000).fadeOut("slow");
 		},
-		error: function() {
-			$('#error').show();
-			$("#error").delay(8000).fadeOut("slow");
+		error: function(message) {
+			$('#TitleError').html(message.responseJSON.title);
+			$('#TitleError').show();
+			$('#DescriptionError').html(message.responseJSON.description);
+			$('#DescriptionError').show();
+			$('#DurationError').html(message.responseJSON.duration);
+			$('#DurationError').show();
+			$('#LanguageError').html(message.responseJSON.language);
+			$('#LanguageError').show();
+			$('#ReleaseDateError').html(message.responseJSON.releaseDate);
+			$('#ReleaseDateError').show();
+			$('#GenreError').html(message.responseJSON.genre);
+			$('#GenreError').show();
+			$('#CountryError').html(message.responseJSON.countryName);
+			$('#CountryError').show();
+			$('#ImageUrlError').html(message.responseJSON.imageUrl);
+			$('#ImageUrlError').show();
+			
 		}
 	});
 	}
@@ -133,7 +137,7 @@ function deleteData(id) {
 
 	$("#delete").on("click", function() {
 		$.ajax({
-			url: "http://192.168.20.204:8080/MovieTickectBooking/delete-movie/" + id,
+			url: "http://127.0.0.1:8080/MovieTickectBooking/delete-movie/" + id,
 			type: "DELETE",
 			success: function() {
 				$("#user-table").html("");
