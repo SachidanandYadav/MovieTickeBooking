@@ -27,25 +27,25 @@
 	<div class="container mt-5">
 		<div class="row m-auto p-4 mt-2">
 			<div class="col-md-4 jumbotron offset-md-4 ">
-				<h3 class="text-center">Login here</h3>
+				<h3 class="text-center"><spring:message code="movietickect.loginpage.header"/></h3>
 					<div class="form-group ">
-						<label for="email">UserName</label> 
-						<input type="text" class="form-control" id="username" placeholder="Enter UserName" name="userName" required="required"> 
+						<label for="username"><spring:message code="movietickect.loginpage.username" /></label> 
+						<input type="text" class="form-control" id="username" placeholder="<spring:message code="movietickect.loginpage.placeholder.username" />" name="userName" required="required"> 
 						<span id="UsernameError" class="error"></span>
 					</div>
 					<div class="form-group ">
-						<label for="password">Password</label> 
-						<input type="password" class="form-control" id="password" placeholder="Enter Password" name="password">
+						<label for="password"><spring:message code="movietickect.loginpage.password" /></label> 
+						<input type="password" class="form-control" id="password" placeholder="<spring:message code="movietickect.loginpage.placeholder.password" />" name="password">
 						<span id="PasswordError" class="error"></span>
 					</div>
 				<div class="form-check mb-2">
 					<input class="form-check-input" type="checkbox" value=0 onchange='handleChange(this);'id="adminlogin"> 
-						<label class="form-check-label" for="flexCheckIndeterminate"> Admin </label>
+						<label class="form-check-label" for="flexCheckIndeterminate"> <spring:message code="movietickect.loginpage.admin" /></label>
 				</div>
-				<button type="submit" id="login" class="btn btn-primary btn-block">Submit</button>
+				<button type="submit" id="login" class="btn btn-primary btn-block"><spring:message code="movietickect.loginpage.submit" /></button>
 					
 					<div class="text-center mt-3">
-					<a href="/MovieTickectBooking/register-page">Create Account</a>
+					<a href="/MovieTickectBooking/register-page"><spring:message code="movietickect.loginpage.createaccount" /></a>
 					</div>
 			</div>
 		</div>

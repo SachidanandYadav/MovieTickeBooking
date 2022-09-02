@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored = "false" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Show Details Page</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -20,24 +21,24 @@
 
 	<div class="container">
 		<div class="col-md-12 table-section">
-			<h1 class="mb-4">Movie Show Detail</h1>
+			<h1 class="mb-4"><spring:message code="movietickect.movieshow.table.title" /></h1>
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Movie Show Detail</th>
-						<th>Action</th>
+						<th><spring:message code="movietickect.movieshow.table.th.movieshow" /></th>
+						<th><spring:message code="movietickect.movieshow.table.th.action" /></th>
 					</tr>
 				</thead>
 				<tbody id="user-table">
 					<c:forEach items="${movieShow}" var="movieShow">
 						<tr>
-							<td>Movie : ${movieShow.title}<br> Description :
-								${movieShow.description}/Language : ${movieShow.language}<br>
-								Start Time : ${movieShow.startTime} / End Time :
+							<td><spring:message code="movietickect.movieshow.table.td.movie" /> ${movieShow.title}<br> <spring:message code="movietickect.movieshow.table.td.description" />
+								${movieShow.description}<spring:message code="movietickect.movieshow.table.td.language" /> ${movieShow.language}<br>
+								<spring:message code="movietickect.movieshow.table.td.starttime" /> ${movieShow.startTime} <spring:message code="movietickect.movieshow.table.td.endtime" />
 								${movieShow.endTime}
 							</td>
 							<td><a href="/MovieTickectBooking/show-booking-page"><button
-										type="button" class="btn btn-danger">Booking</button></a></td>
+										type="button" class="btn btn-danger"><spring:message code="movietickect.movieshow.table.button.booking" /></button></a></td>
 						</tr>
 					</c:forEach>
 
@@ -47,7 +48,7 @@
 
 		<div class="col-sm-3 back-button">
 			<a href="/MovieTickectBooking/movie-detail-page">
-			<button type="button" class="btn btn-danger">Back</button></a>
+			<button type="button" class="btn btn-danger"><spring:message code="movietickect.movieshow.table.back"/></button></a>
 		</div>
 	</div>
 

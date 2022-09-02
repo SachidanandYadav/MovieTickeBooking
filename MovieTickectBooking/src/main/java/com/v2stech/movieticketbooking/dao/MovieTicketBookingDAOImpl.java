@@ -20,6 +20,10 @@ import com.v2stech.movieticketbooking.model.SeatStatusDTO;
 import com.v2stech.movieticketbooking.model.ShowSeatDTO;
 import com.v2stech.movieticketbooking.model.StateDTO;
 
+/**
+ * @author Sachidanand Yadav
+ *
+ */
 @Repository
 public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 
@@ -29,6 +33,9 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	private int hallId;
 	private int seatTypeID;
 
+	/**
+	 * Query For City Data  
+	 */
 	@Override
 	public List<CityDTO> getCityData() {
 		return jdbcTemplate.query("select * from city", new BeanPropertyRowMapper<CityDTO>(CityDTO.class));

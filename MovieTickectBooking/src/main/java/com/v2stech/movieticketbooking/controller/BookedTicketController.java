@@ -16,6 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
+/**
+ * @author Sachidanand Yadav
+ *
+ */
 @RestController
 public class BookedTicketController {
 
@@ -25,22 +29,36 @@ public class BookedTicketController {
 	
 	/**
 	 * @return
+	 * return Admin booked Ticket Page.
 	 */
 	@GetMapping("/booking-page")
 	public ModelAndView getBookingPage() {
 		return new ModelAndView("adminBookedTicket");
 	}
 	
+	/**
+	 * @return List
+	 * return Booked Ticket List.
+	 */
 	@RequestMapping("/booking-list")
 	public List<BookedTicketDTO> getBookedLists() {
 		return bookingService.getBookedList();
 	}
 	
+	/**
+	 * @param id
+	 * Delete Booking by Id.
+	 */
 	@DeleteMapping("/delete-booking/{id}")
 	public void deleteBooking(@PathVariable int id) {
 		bookingService.deleteBooking(id);
 	}
 	
+	/**
+	 * @param model
+	 * @param bookedTicketDTO
+	 * @return Admin Payment Page.
+	 */
 	@GetMapping("/payment-page")
 	public ModelAndView getPaymentPage(Model model,BookedTicketDTO bookedTicketDTO) {
 		model.addAttribute("paymentList", bookingService.getAllPayments());
@@ -48,6 +66,12 @@ public class BookedTicketController {
 	}
 	
 	
+	/**
+	 * @param id
+	 * @param model
+	 * @return Admin Payment Page
+	 * Delete Payment By Payment Id;
+	 */
 	@PostMapping("/payment")
 	public ModelAndView deletePayment(@RequestParam("paymentid") int id ,Model model) {
 		bookingService.deletePayment(id);

@@ -19,12 +19,20 @@ import com.v2stech.movieticketbooking.exception.BindingResultException;
 import com.v2stech.movieticketbooking.model.MovieDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
+/**
+ * @author Sachidanand Yadav
+ *
+ */
 @RestController
 public class MovieController {
 
 	@Autowired
 	MovieTicketBookingService bookingService;
 	
+	/**
+	 * @param model
+	 * @return Admin Movie Page
+	 */
 	@RequestMapping("/movie")
 	public ModelAndView getMovieDetail(Model model) {
 		bookingService.getMovieDetails();
@@ -32,16 +40,29 @@ public class MovieController {
 		return new ModelAndView("AdminMovie");
 	}
 	
+	/**
+	 * @return Movie List
+	 */
 	@RequestMapping("/movie-list")
 	public List<MovieDTO> getMovieLists() {
 		return bookingService.getMovieList();
 	}
 	
+	/**
+	 * @param id
+	 * @return Movie By Id
+	 */
 	@RequestMapping("/movie/{movieid}")
 	public MovieDTO getSingleMovie(@PathVariable("movieid") String id) {
 		return  bookingService.getMovieById(id);
 	}
 	
+	/**
+	 * @param movie
+	 * @param result
+	 * @throws BindingResultException
+	 * Add & Update Movie
+	 */
 	@PostMapping("/movie-detail")
 	public void movie(@Valid @RequestBody MovieDTO movie, BindingResult result) throws BindingResultException {
 		if (result.hasErrors()) {
@@ -53,6 +74,10 @@ public class MovieController {
 	}
 
 	
+	/**
+	 * @param id
+	 * Delete Movie By Movie ID.
+	 */
 	@DeleteMapping("/delete-movie/{id}")
 	public void deleteMovie(@PathVariable String id) {
 		bookingService.deleteMovie(id);

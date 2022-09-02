@@ -1,8 +1,9 @@
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ page isELIgnored="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page isELIgnored = "false" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,55 +22,56 @@
 		<div class="container">
 		<div id="addSuccess" class=" mt-4 col-sm-12" style="display: none;">
 			<div class="alert alert-success">
-				<strong><em class="fa fa-thumbs-up"></em> </strong>
-				<span>Data Add Successfully</span>
+				<strong><em class="fa fa-thumbs-up"></em> </strong> 
+				<span><spring:message code="movietickect.message.addsuccess" /></span>
 			</div>
 		</div>
+		<div id="error" class="col-sm-12" style="display: none;">
+			<div class="alert alert-danger">
+				<strong><em class="fa fa-thumbs-down"></em> </strong> 
+				<span><spring:message code="movietickect.message.error" /></span>
+			</div>
+		</div> 
 		
 		<div id="deleteSuccess" class=" mt-4 col-sm-12" style="display: none;">
 			<div class="alert alert-success">
 				<strong><em class="fa fa-thumbs-up"></em> </strong>
-				<span>Data Deleted Successfully</span>
+				<span><spring:message code="movietickect.message.delete.success" /></span>
 			</div>
 		</div>
 		
 		<div id="updateSuccess" class=" mt-4 col-sm-12" style="display: none;">
 			<div class="alert alert-success">
 				<strong><em class="fa fa-thumbs-up"></em> </strong>
-				<span>Data Updated Successfully</span>
+				<span><spring:message code="movietickect.message.update.success" /></span>
 			</div>
 		</div>
 		
 		<div id="failure" class="col-sm-12" style="display: none;">
 			<div class="alert alert-danger">
 				<strong><em class="fa fa-thumbs-down"></em> </strong>
-				<span>Failed !!</span>
+				<span><spring:message code="movietickect.message.failure" /></span>
 			</div>
 		</div>
 		
-		<div id="error" class="col-sm-12" style="display: none;">
-			<div class="alert alert-danger">
-				<strong><em class="fa fa-thumbs-down"></em> </strong>
-				<span>Something went wrong !!</span>
-			</div>
-		</div>
+		
 			<div>
-					<h1 class="display-4">Movie</h1>
+					<h1 class="display-4"><spring:message code="movietickect.adminmoviespage.main.title" /></h1>
 					<button type="button" class="btn btn-outline-primary waves-effec px-3" onclick="resetAllFiled()" data-toggle="modal" data-target="#exampleModal" ><i class="fa fa-plus" aria-hidden="true"></i></button>
 				<hr class="hr-primary" />
 			</div>
 	
 			<div class="col-md-12">
-				<h1 class="mb-4">Movie List</h1>
+				<h1 class="mb-4"><spring:message code="movietickect.adminmoviespage.body.title" /></h1>
 				<table class="table table-hover" >
 					<thead>
 						<tr>
-							<th>Movie ID</th>
-							<th>Title</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Language</th>
-							<th>Action</th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.movieid" /></th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.title" /></th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.description" /></th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.duration" /></th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.language" /></th>
+							<th><spring:message code="movietickect.adminmoviespage.table.th.action" /></th>
 						</tr>
 					</thead>
 					<tbody id="user-table" >
@@ -82,7 +84,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Movie</h5>
+							<h5 class="modal-title" id="exampleModalLabel"><spring:message code="movietickect.adminmoviespage.model.title" /></h5>
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -91,42 +93,42 @@
 						<div class="modal-body">
 						<input type="hidden" class="form-control" id="movieid">
 						<div class="form-group row">
-						<label for="title" class="col-sm-3 col-form-label">Title</label>
+						<label for="title" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.title" /></label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="title" placeholder="Title" name="title">
 							<span id="TitleError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="description" class="col-sm-3 col-form-label">Description</label>
+						<label for="description" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.description" /></label>
 						<div class="col-sm-8">
 							<textarea class="form-control" id="description" placeholder="Description" name="description"></textarea>
 							<span id="DescriptionError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="duration" class="col-sm-3 col-form-label">Duration</label>
+						<label for="duration" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.duration" /></label>
 						<div class="col-sm-8">
 							<input type="time" class="form-control" id="duration" placeholder="Duration" name="Duration">
 							<span id="DurationError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="language" class="col-sm-3 col-form-label">Language</label>
+						<label for="language" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.language" /></label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="language" placeholder="Language" name="language">
 							<span id="LanguageError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="releaseDate" class="col-sm-3 col-form-label">Release Date</label>
+						<label for="releaseDate" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.releasedate" /></label>
 						<div class="col-sm-8">
 							<input type="date" class="form-control" id="releaseDate" placeholder="Date" name="releaseDate">
 							<span id="ReleaseDateError" class="error"></span>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="genre" class="col-sm-3 col-form-label">Movie Genre</label>
+						<label for="genre" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.genre" /></label>
 						<div class="col-sm-8">
 							<input type="text" class="form-control" id="genre" placeholder="Gener" name="genre">
 							<span id="GenreError" class="error"></span>
@@ -134,7 +136,7 @@
 					</div>
 					
 					<div class="form-group row">
-						<label for="country" class="col-sm-3 col-form-label">Country</label>
+						<label for="country" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.image" /></label>
 						<div class="col-sm-8">
 							<select id="country"class="form-control">
 								<option selected disabled>Choose...</option>
@@ -146,7 +148,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="imageUrl" class="col-sm-3 col-form-label">Image URL</label>
+						<label for="imageUrl" class="col-sm-3 col-form-label"><spring:message code="movietickect.adminmoviespage.model.lable.image" /></label>
 						<div class="col-sm-8">
 							<textarea class="form-control" id="imageUrl" placeholder="Image Url" name="imageUrl"></textarea>
 							<span id="ImageUrlError" class="error"></span>
@@ -155,8 +157,8 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
-							onclick="restAllError()" data-dismiss="modal">Close</button>
-							<button type="button"  class="btn btn-primary" id="Movie">Movie</button>
+							onclick="restAllError()" data-dismiss="modal"><spring:message code="movietickect.adminmoviespage.model.button.close" /></button>
+							<button type="button"  class="btn btn-primary" id="Movie"><spring:message code="movietickect.adminmoviespage.model.button.movie" /></button>
 						</div>
 					</div>
 				</div>
@@ -168,16 +170,16 @@
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
-							Confirm Delete
+							<spring:message code="movietickect.adminmoviespage.model.delete.confirm" />
 							<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">Are you sure you wanna delete this ?
+						<div class="modal-body"><spring:message code="movietickect.adminmoviespage.model.delete.body" />
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-							<a class="btn btn-danger btn-ok" id="delete" data-dismiss="modal">Delete</a>
+							<button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="movietickect.adminmoviespage.model.delete.cancle" /></button>
+							<a class="btn btn-danger btn-ok" id="delete" data-dismiss="modal"><spring:message code="movietickect.adminmoviespage.model.button.delete" /></a>
 						</div>
 					</div>
 				</div>

@@ -2,9 +2,11 @@ package com.v2stech.movieticketbooking.configuration;
 
 import javax.sql.DataSource;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
@@ -57,4 +59,11 @@ public class ProjectConfiguration implements WebMvcConfigurer {
 	    jdbcTemplate.setDataSource(dataSource());
 	    return jdbcTemplate;
 	  }
+	
+	@Bean
+	public MessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:messages");
+		return messageSource;
+	}
 }

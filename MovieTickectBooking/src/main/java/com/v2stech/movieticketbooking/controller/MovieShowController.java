@@ -20,17 +20,29 @@ import com.v2stech.movieticketbooking.model.CinemaHallDTO;
 import com.v2stech.movieticketbooking.model.MovieShowDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
+/**
+ * @author Sachidanand Yadav
+ *
+ */
 @RestController
 public class MovieShowController {
 
 	@Autowired
 	MovieTicketBookingService bookingService;
 
+	/**
+	 * @param id
+	 * @return Cinema Hall List By id
+	 */
 	@RequestMapping("/cinema-hall-list/{cityId}")
 	public List<CinemaHallDTO> getCinemaHallList(@PathVariable("cityId") int id) {
 		return  bookingService.getCinemaHallList(id);
 	}
 	
+	/**
+	 * @param model
+	 * @return Admin Movie Show Page
+	 */
 	@RequestMapping("/movie-show")
 	public ModelAndView getMovieShowDetail(Model model) {
 		bookingService.getMovieShowLists();	
@@ -39,17 +51,30 @@ public class MovieShowController {
 		return new ModelAndView("adminMovieShow");
 	}
 	
+	/**
+	 * @return Movie Show List
+	 */
 	@RequestMapping("/movie-show-list")
 	public List<MovieShowDTO> getMovieShowLists() {
 		return bookingService.getMovieShowLists();
 	}
 	
 
+	/**
+	 * @param id
+	 * @return Movie Show By Id
+	 */
 	@RequestMapping("/movie-show/{id}")
 	public MovieShowDTO getSingleMovieShow(@PathVariable("id") int id) {
 		return  bookingService.getMovieShowById(id);
 	}
 	
+	/**
+	 * @param movieShow
+	 * @param result
+	 * @throws BindingResultException
+	 * Add & Update Movie Show .
+	 */
 	@PostMapping("/movie-show")
 	public void movieShow(@Valid @RequestBody MovieShowDTO movieShow, BindingResult result) throws BindingResultException {
 		if(result.hasErrors()) {
@@ -60,6 +85,10 @@ public class MovieShowController {
 	}
 
 
+	/**
+	 * @param id
+	 * Delete Movie Show By Id.
+	 */
 	@DeleteMapping("/delete-movie-show/{id}")
 	public void deleteMovieShow(@PathVariable int id) {
 		bookingService.deleteMovieShows(id);

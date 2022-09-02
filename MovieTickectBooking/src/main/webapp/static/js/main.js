@@ -226,6 +226,7 @@ $("#editCustomer").on("click", function() {
 			$('#areaPincode').val(res.areaPincode);
 			$('#cityoption').remove();
 			$("#city").append("<option selected disabled id='cityoption' value=" + res.city_id + ">" + res.city_name + "</option>");
+			$("#city").val(res.city_id);
 		},
 		failure: function() {
 			$('#failure').show();

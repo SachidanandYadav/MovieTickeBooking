@@ -29,13 +29,10 @@ import com.v2stech.movieticketbooking.model.UserCredentialsDTO;
 import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
 
 /**
- * @author v2stech
+ * @author Sachidanand Yadav
  *
  */
-/**
- * @author v2stech
- *
- */
+
 @RestController
 //@RequestMapping("/home")
 public class HomeController {
@@ -50,7 +47,7 @@ public class HomeController {
 	private List<MovieShowDTO> movieShowDetail;
 
 	/**
-	 * @return
+	 * @return Login Page
 	 */
 	@RequestMapping("/login-page")
 	public ModelAndView getLoginPage() {
@@ -59,7 +56,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Registration Page
 	 */
 	@GetMapping("/register-page")
 	public ModelAndView getRegisterPage(Model model) {
@@ -72,6 +69,7 @@ public class HomeController {
 	 * @param customer
 	 * @param result
 	 * @throws BindingResultException
+	 * Add New Customer 
 	 */
 	@PostMapping("/customer")
 	public void saveCustomer(@Valid @RequestBody CustomerDTO customer, BindingResult result) throws BindingResultException {
@@ -85,7 +83,7 @@ public class HomeController {
 	/**
 	 * @param user
 	 * @param result
-	 * @return
+	 * @return Check Credential For Login.
 	 * @throws InvalidCredentialException
 	 * @throws BindingResultException
 	 */
@@ -103,7 +101,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Dash Board Page.
 	 */
 	@RequestMapping("/dashboard-page")
 	public ModelAndView getDashboardPage(Model model) {
@@ -115,7 +113,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Admin Dash Board Page.
 	 */
 	@RequestMapping("/admin-dashboard-page")
 	public ModelAndView getAdminDashboardPage(Model model) {
@@ -126,7 +124,7 @@ public class HomeController {
 	/**
 	 * @param movieName
 	 * @param model
-	 * @return
+	 * @return Controller name in String.
 	 */
 	@GetMapping("/movie-details/{movieName}")
 	public String getFullDetails(@PathVariable String movieName, Model model) {
@@ -136,7 +134,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Single movie Details Page
 	 */
 	@RequestMapping("/movie-detail-page")
 	public ModelAndView getMovieDetailPage(Model model) {
@@ -150,7 +148,7 @@ public class HomeController {
 	 * @param hallId
 	 * @param title
 	 * @param model
-	 * @return
+	 * @return Show Detail Page Controller  
 	 */
 	@GetMapping("/movie-show-detail/{hallId}/{title}")
 	public String getMovieShowById(@PathVariable int hallId, @PathVariable String title, Model model) {
@@ -160,7 +158,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Show Detail Page
 	 */
 	@RequestMapping("/show-detail-page")
 	public ModelAndView getMovieShowPage(Model model) {
@@ -171,7 +169,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Booking Page
 	 */
 	@RequestMapping("/show-booking-page")
 	public ModelAndView getBookingPage(Model model) {
@@ -183,7 +181,7 @@ public class HomeController {
 
 	/**
 	 * @param seatType
-	 * @return
+	 * @return Total Seat By Seat Type.
 	 */
 	@GetMapping("/total-seat/{seatType}")
 	public CinemaSeatDTO getTotalSeat(@PathVariable int seatType) {
@@ -191,7 +189,7 @@ public class HomeController {
 	}
 
 	/**
-	 * @return
+	 * @return Payment Method Detail.
 	 */
 	@GetMapping("/payment-method")
 	public List<PaymentMethodDTO> getPayment() {
@@ -201,6 +199,7 @@ public class HomeController {
 	/**
 	 * @param bookedTicket
 	 * @throws InvalidSeatException
+	 * Add Booking Details.
 	 */
 	@PostMapping("/booking-detail")
 	public void setBookingDetail(@RequestBody BookedTicketDTO bookedTicket) throws InvalidSeatException {
@@ -210,7 +209,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return Booking History.
 	 */
 	@RequestMapping("/booking-history")
 	public ModelAndView getBookingHistoryPage(Model model) {
@@ -219,7 +218,7 @@ public class HomeController {
 	}
 
 	/**
-	 * @return
+	 * @return Booking History By User Name
 	 */
 	@RequestMapping("/booking-history-list")
 	public List<BookedTicketDTO> getBookingHistoryList() {
@@ -228,7 +227,7 @@ public class HomeController {
 
 	/**
 	 * @param bookingId
-	 * @return
+	 * @return Payment Details By Booking Id
 	 */
 	@RequestMapping("/payment-detail/{bookingId}")
 	public BookedTicketDTO getPaymentDetail(@PathVariable int bookingId) {
@@ -237,7 +236,7 @@ public class HomeController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return User Profile Controller
 	 */
 	@RequestMapping("/profile")
 	public ModelAndView getProfilePage(Model model) {
@@ -247,7 +246,7 @@ public class HomeController {
 	}
 
 	/**
-	 * @return
+	 * @return User Profile By UserName
 	 */
 	@RequestMapping("/user-profile")
 	public CustomerDTO getUserProfile() {
@@ -257,6 +256,7 @@ public class HomeController {
 	/**
 	 * @param customer
 	 * @param id
+	 * Update Customer By Customer Id.
 	 */
 	@RequestMapping("/update-customer/{id}")
 	public void getUpdateCustomer(@RequestBody CustomerDTO customer,@PathVariable int id) {
