@@ -2,6 +2,8 @@ package com.v2stech.movieticketbooking.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.v2stech.movieticketbooking.model.BookedTicketDTO;
-import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
+import com.v2stech.movieticketbooking.service.BookedTicketService;
 
 /**
  * @author Sachidanand Yadav
@@ -25,7 +27,7 @@ public class BookedTicketController {
 
 
 	@Autowired
-	MovieTicketBookingService bookingService;
+	BookedTicketService ticketService;
 	
 	/**
 	 * @return
@@ -42,7 +44,7 @@ public class BookedTicketController {
 	 */
 	@RequestMapping("/booking-list")
 	public List<BookedTicketDTO> getBookedLists() {
-		return bookingService.getBookedList();
+		return ticketService.getBookedList();
 	}
 	
 	/**
@@ -51,7 +53,7 @@ public class BookedTicketController {
 	 */
 	@DeleteMapping("/delete-booking/{id}")
 	public void deleteBooking(@PathVariable int id) {
-		bookingService.deleteBooking(id);
+		ticketService.deleteBooking(id);
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class BookedTicketController {
 	 */
 	@GetMapping("/payment-page")
 	public ModelAndView getPaymentPage(Model model,BookedTicketDTO bookedTicketDTO) {
-		model.addAttribute("paymentList", bookingService.getAllPayments());
+		model.addAttribute("paymentList", ticketService.getAllPayments());
 		return new ModelAndView("adminPaymentPage");
 	}
 	
@@ -74,8 +76,17 @@ public class BookedTicketController {
 	 */
 	@PostMapping("/payment")
 	public ModelAndView deletePayment(@RequestParam("paymentid") int id ,Model model) {
-		bookingService.deletePayment(id);
-		model.addAttribute("paymentList", bookingService.getAllPayments());
+		ticketService.deletePayment(id);
+		model.addAttribute("paymentList", ticketService.getAllPayments());
 		return new ModelAndView("adminPaymentPage");
+	}
+	
+	/**
+	 * @return Booking History By User Name
+	 */
+	@RequestMapping("/booking-history-list")
+	public List<BookedTicketDTO> getBookingHistoryList(HttpSession session) {
+		String userName = (String) session.getAttribute("username");
+		return ticketService.getBookingHistoryLists(userName);
 	}
 }

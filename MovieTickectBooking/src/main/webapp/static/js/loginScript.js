@@ -174,6 +174,19 @@ $("#addCustomer").on("click", function() {
 
 
 $("#login").on("click", function() {
+	
+	$.ajax({
+		url: "http://127.0.0.1:8080/MovieTickectBooking/session-destroy",
+		type: "GET",
+		success: function() {
+			console.log("Success");
+		},
+		error: function() {
+			console.log("Success");
+		}
+	});
+	
+	
 
 	var login = {}
 	login.isAdmin = $('#adminlogin').val();

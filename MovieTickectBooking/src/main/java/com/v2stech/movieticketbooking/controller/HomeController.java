@@ -2,17 +2,22 @@ package com.v2stech.movieticketbooking.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.v2stech.movieticketbooking.exception.InvalidCredentialException;
@@ -34,16 +39,13 @@ import com.v2stech.movieticketbooking.service.MovieTicketBookingService;
  */
 
 @RestController
-//@RequestMapping("/home")
+@SessionAttributes("username")
 public class HomeController {
 
 	@Autowired
 	MovieTicketBookingService bookingService;
 
-	private String userName;
-
 	private MovieDTO singleMovieDetail;
-
 	private List<MovieShowDTO> movieShowDetail;
 
 	/**
@@ -79,21 +81,27 @@ public class HomeController {
 			bookingService.saveCustomerData(customer);
 		}
 	}
+	
+	@GetMapping("/session-destroy")
+	public void  sessionComplete(SessionStatus status) {
+		status.setComplete();
+	}
 
 	/**
 	 * @param user
 	 * @param result
-	 * @return Check Credential For Login.
+	 * @return Check Credential For Login.	
 	 * @throws InvalidCredentialException
 	 * @throws BindingResultException
 	 */
 	@PostMapping("/login-customer")
-	public String loginCustomer(@Valid @RequestBody UserCredentialsDTO user, BindingResult result)
+	public String loginCustomer(@Valid @RequestBody UserCredentialsDTO user, BindingResult result,HttpServletRequest request)
 			throws InvalidCredentialException, BindingResultException {
 		if (result.hasErrors()) {
 			throw new BindingResultException(result);
 		} else {
-			userName = user.getUserName();
+			HttpSession session =  request.getSession();
+			session.setAttribute("username", user.getUserName());
 			return bookingService.getUserCredentials(user);
 		}
 
@@ -107,7 +115,6 @@ public class HomeController {
 	public ModelAndView getDashboardPage(Model model) {
 		List<MovieDTO> movie = bookingService.getMovieDetails();
 		model.addAttribute("movieList", movie);
-		model.addAttribute("username", userName);
 		return new ModelAndView("DashboardPage");
 	}
 
@@ -117,7 +124,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/admin-dashboard-page")
 	public ModelAndView getAdminDashboardPage(Model model) {
-		model.addAttribute("username", userName);
 		return new ModelAndView("adminDashboardPage");
 	}
 
@@ -138,7 +144,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/movie-detail-page")
 	public ModelAndView getMovieDetailPage(Model model) {
-		model.addAttribute("username", userName);
 		model.addAttribute("cityList", bookingService.getCityDatas());
 		model.addAttribute("Movie", singleMovieDetail);
 		return new ModelAndView("movieDetails");
@@ -162,7 +167,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/show-detail-page")
 	public ModelAndView getMovieShowPage(Model model) {
-		model.addAttribute("username", userName);
 		model.addAttribute("movieShow", movieShowDetail);
 		return new ModelAndView("ShowDetails");
 	}
@@ -173,7 +177,6 @@ public class HomeController {
 	 */
 	@RequestMapping("/show-booking-page")
 	public ModelAndView getBookingPage(Model model) {
-		model.addAttribute("username", userName);
 		model.addAttribute("movieShow", movieShowDetail);
 		model.addAttribute("seatType", bookingService.getCinemaSeatTypes());
 		return new ModelAndView("BookingPage");
@@ -213,17 +216,9 @@ public class HomeController {
 	 */
 	@RequestMapping("/booking-history")
 	public ModelAndView getBookingHistoryPage(Model model) {
-		model.addAttribute("username", userName);
 		return new ModelAndView("BookingHistory");
 	}
 
-	/**
-	 * @return Booking History By User Name
-	 */
-	@RequestMapping("/booking-history-list")
-	public List<BookedTicketDTO> getBookingHistoryList() {
-		return bookingService.getBookingHistoryLists(userName);
-	}
 
 	/**
 	 * @param bookingId
@@ -239,7 +234,7 @@ public class HomeController {
 	 * @return User Profile Controller
 	 */
 	@RequestMapping("/profile")
-	public ModelAndView getProfilePage(Model model) {
+	public ModelAndView getProfilePage(@ModelAttribute("username") String userName,Model model) {
 		model.addAttribute("cityList", bookingService.getCityDatas());
 		model.addAttribute("profile", bookingService.getUserProfiles(userName));
 		return new ModelAndView("userProfile");
@@ -249,7 +244,7 @@ public class HomeController {
 	 * @return User Profile By UserName
 	 */
 	@RequestMapping("/user-profile")
-	public CustomerDTO getUserProfile() {
+	public CustomerDTO getUserProfile( @ModelAttribute("username") String userName) {
 		return bookingService.getUserProfiles(userName);
 	}
 
@@ -262,5 +257,12 @@ public class HomeController {
 	public void getUpdateCustomer(@RequestBody CustomerDTO customer,@PathVariable int id) {
 		bookingService.getUpdateCustomers(customer,id);
 	}
+	
+	@RequestMapping("/logout")
+	public ModelAndView getLogout(SessionStatus status) {
+		sessionComplete(status);
+		return getLoginPage();
+	}
+	
 
 }

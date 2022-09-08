@@ -36,10 +36,7 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 	/**
 	 * Query For City Data  
 	 */
-	@Override
-	public List<CityDTO> getCityData() {
-		return jdbcTemplate.query("select * from city", new BeanPropertyRowMapper<CityDTO>(CityDTO.class));
-	}
+	
 
 	@Override
 	public List<CinemaHallDTO> getCinemaHallLists(final int id) {
@@ -256,6 +253,8 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 		return jdbcTemplate.query("select * from country", new BeanPropertyRowMapper<CountryDTO>(CountryDTO.class));
 	}
 
+	///
+	
 	@Override
 	public void saveCustomerDatas(CustomerDTO customer) {
 		jdbcTemplate.update(
@@ -268,7 +267,14 @@ public class MovieTicketBookingDAOImpl implements MovieTickectBookingDAO {
 				"INSERT INTO user_credentials(user_name,password,customer_id) VALUES(?,?,(select customer_id from customer where email=?))",
 				customer.getUser_name(), customer.getPassword(), customer.getEmail());
 	}
+	
+	@Override
+	public List<CityDTO> getCityData() {
+		return jdbcTemplate.query("select * from city", new BeanPropertyRowMapper<CityDTO>(CityDTO.class));
+	}
 
+	
+	
 	@Override
 	public List<MovieShowDTO> getMovieShowByHallId(int id,String title) {
 		this.hallId = id;

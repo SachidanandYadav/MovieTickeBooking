@@ -23,7 +23,7 @@
       <ul class="nav navbar-nav navbar-right">
        <li><a href=""><span class="glyphicon glyphicon-user"></span> ${username}</a></li>
       <%--   <li><span class="glyphicon glyphicon-user"></span></li> --%>
-        <li><a href="/MovieTickectBooking/login-page"><span class="glyphicon glyphicon-log-out"></span><spring:message code="movietickect.headerpage.href.logout" /></a></li>
+        <li><a href="/MovieTickectBooking/logout"><span class="glyphicon glyphicon-log-out"></span><spring:message code="movietickect.headerpage.href.logout" /></a></li>
       </ul>
     </div>
   </nav>

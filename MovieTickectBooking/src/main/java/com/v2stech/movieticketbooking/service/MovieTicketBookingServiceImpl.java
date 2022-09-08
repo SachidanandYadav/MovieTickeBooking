@@ -2,6 +2,8 @@ package com.v2stech.movieticketbooking.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,7 +39,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	private	CinemaSeatDTO singleSeats;
 
 	@Override
-	public void saveCustomerData(CustomerDTO customer) {
+	public void saveCustomerData(@Valid CustomerDTO customer) {
 		movieTickectBookingDAO.saveCustomerDatas(customer);
 	}
 
@@ -52,7 +54,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public String getUserCredentials(UserCredentialsDTO credentials) throws InvalidCredentialException {
+	public String getUserCredentials(@Valid UserCredentialsDTO credentials) throws InvalidCredentialException {
 		String viewNameString = "";
 		if (credentials.getIsAdmin() == 1) {
 				List<UserCredentialsDTO> admin = jdbcTemplate.query(
@@ -100,7 +102,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public void movies(MovieDTO movie) {
+	public void movies(@Valid MovieDTO movie) {
 		if (movie.getMovieId() == 0) {
 			movieTickectBookingDAO.addMovie(movie);
 		} else {
@@ -122,17 +124,8 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 		}
 		return null;
 	}
-
-	@Override
-	public List<BookedTicketDTO> getBookedList() {
-		return movieTickectBookingDAO.getBookedLists();
-	}
-
-	@Override
-	public void deleteBooking(int id) {
-		movieTickectBookingDAO.deleteBookings(id);
-	}
-
+	
+	
 	@Override
 	public List<MovieShowDTO> getMovieShowLists() {
 		return movieTickectBookingDAO.getMovieShowDetails();
@@ -149,7 +142,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 	}
 
 	@Override
-	public void movieShow(MovieShowDTO movieShow) {
+	public void movieShow( MovieShowDTO movieShow) {
 		if (movieShow.getShowId() == 0) {
 			movieTickectBookingDAO.addMovieShow(movieShow);
 		} else {
@@ -285,11 +278,7 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 		
 	}
 
-	@Override
-	public List<BookedTicketDTO> getBookingHistoryLists(String userName) {
-		return movieTickectBookingDAO.getBookingHistoryList(userName);
-	}
-
+	
 	@Override
 	public BookedTicketDTO getPaymentDetails(int bookingId) {
 		return movieTickectBookingDAO.getPaymentDetail(bookingId);
@@ -305,24 +294,6 @@ public class MovieTicketBookingServiceImpl implements MovieTicketBookingService 
 		movieTickectBookingDAO.getUpdateCustomer(customer,id);
 		
 	}
-	
-	
-	@Override
-	public List<BookedTicketDTO> getAllPayments() {
-		return movieTickectBookingDAO.getAllPayment();
-	}
-
-	@Override
-	public void deletePayment(int id) {
-		movieTickectBookingDAO.deletePaymentById(id);
-	}
-	
-
-	
-	
-	
-	
-	
 	
 
 }

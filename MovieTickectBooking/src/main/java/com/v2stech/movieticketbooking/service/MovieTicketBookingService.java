@@ -42,10 +42,6 @@ public interface MovieTicketBookingService {
 
 	MovieDTO getMovieSingleDetail(String movieName);
 
-	List<BookedTicketDTO> getBookedList();
-
-	void deleteBooking(int id);
-
 	List<MovieShowDTO> getMovieShowLists();
 
 	List<CinemaHallDTO> getCinemaHallList(int id);
@@ -96,17 +92,12 @@ public interface MovieTicketBookingService {
 	
 	void setBookingDetails(BookedTicketDTO bookedTicket) throws InvalidSeatException;
 	
-	List<BookedTicketDTO> getBookingHistoryLists(String userName);
-	
 	 BookedTicketDTO getPaymentDetails(int bookingId);
 	 
 	 CustomerDTO getUserProfiles(String userName);
 	 
 	 void getUpdateCustomers(CustomerDTO customer,int id);
 	 
-	 List<BookedTicketDTO> getAllPayments();
-	 
-	 void deletePayment(int id);
 	
 	
 	//int getTotalSeatPrice(int totalSeat);
